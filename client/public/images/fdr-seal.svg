@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="FDR seal">
+  <!-- FDR seal: three nested doorway arches, the inner arch resolving into a checkmark. -->
+  <path d="M9 60.5h46" fill="none" stroke="#B68A45" stroke-width="4.5" stroke-linecap="round" />
+  <path
+    d="M12 56.5V31.5C12 19.7 21 10.2 32 10.2s20 9.5 20 21.3v25"
+    fill="none"
+    stroke="#B68A45"
+    stroke-width="4.5"
+    stroke-linecap="round"
+  />
+  <path
+    d="M20.5 56.5V33.8c0-7.4 5.1-13.4 11.5-13.4s11.5 6 11.5 13.4v22.7"
+    fill="none"
+    stroke="#D2AD6F"
+    stroke-width="3.4"
+    stroke-linecap="round"
+  />
+  <path
+    d="M25.6 44.2l4.4 4.7 8.6-10"
+    fill="none"
+    stroke="#B68A45"
+    stroke-width="4.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
