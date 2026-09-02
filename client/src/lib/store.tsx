@@ -1,50 +1,20 @@
-// FDR operations store: the app's living shift book.
-// Persists accounts, session, tasks, submitted reports, and the audit trail to localStorage,
-// so every handoff survives a page reload without needing a backend.
+// FDR session store — the client's view of the real backend.
+// All data lives in SQLite on the server; this context handles auth,
+// fetching the combined state, and running mutations.
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { api, type AuditDto, type FeedbackDto, type FinanceDto, type InquiryDto, type ReportDto, type SessionUser, type TaskDto } from "./api";
 
 export type Shift = "Morning" | "Afternoon" | "Night";
 export type TaskStatus = "Pending" | "In Progress" | "Completed";
 export type TaskPriority = "High" | "Med" | "Low";
-export type ReportStatus = "Submitted" | "Approved" | "Draft";
-export type AuditArea = "Report" | "Finance" | "Tasks" | "Access";
 
-export interface User {
-  name: string;
-  email: string;
-  role: "Admin" | "Staff";
-  department: string;
-}
-
-export interface FdrTask {
-  id: string;
-  title: string;
-  detail: string;
-  status: TaskStatus;
-  priority: TaskPriority;
-  due: string;
-}
-
-export interface ShiftReport {
-  id: string;
-  dateIso: string;
-  shift: Shift;
-  reporter: string;
-  occupancy: string;
-  income: string;
-  status: ReportStatus;
-  notes: string;
-  createdAt: number;
-}
-
-export interface AuditEvent {
-  id: string;
-  dateIso: string;
-  time: string;
-  user: string;
-  event: string;
-  area: AuditArea;
-}
+export type FdrTask = TaskDto;
+export type ShiftReport = ReportDto;
+export type AuditEvent = AuditDto;
+export type Inquiry = InquiryDto;
+export type FeedbackEntry = FeedbackDto;
+export type FinanceEntry = FinanceDto;
+export type AppUser = SessionUser;
 
 export interface ReportInput {
   dateIso: string;
@@ -54,228 +24,208 @@ export interface ReportInput {
   notes: string;
 }
 
-interface FdrState {
+export type LoginFailure = "invalid" | "pending" | "rejected" | "network";
+
+interface StoreValue {
+  user: AppUser | null;
+  loading: boolean;
   tasks: FdrTask[];
   reports: ShiftReport[];
   audit: AuditEvent[];
-}
-
-interface StoreValue extends FdrState {
-  user: User | null;
-  signIn: (email: string, password: string) => boolean;
-  signOut: () => void;
-  addTask: (task: Omit<FdrTask, "id">) => void;
-  updateTaskStatus: (id: string, status: TaskStatus) => void;
-  submitReport: (input: ReportInput) => ShiftReport;
-  saveDraft: (input: ReportInput) => void;
-}
-
-const STORAGE_KEY = "fdr.operations.v1";
-const SESSION_KEY = "fdr.session.v1";
-
-// Demo staff accounts (client-side demo only — no real credentials involved).
-const accounts: Array<{ email: string; password: string; profile: User }> = [
-  { email: "admin@hotel.com", password: "admin123", profile: { name: "John Doe", email: "admin@hotel.com", role: "Admin", department: "Front office" } },
-  { email: "staff@hotel.com", password: "staff123", profile: { name: "Sokha Chan", email: "staff@hotel.com", role: "Staff", department: "Front office" } },
-];
-
-function seedTasks(): FdrTask[] {
-  return [
-    { id: "TSK-104", title: "Verify late check-outs", detail: "Rooms 302, 415 and 608", status: "Pending", priority: "High", due: "10:30" },
-    { id: "TSK-103", title: "Prepare VIP arrival notes", detail: "Ms. Sokha · room 706", status: "In Progress", priority: "High", due: "11:00" },
-    { id: "TSK-102", title: "Review card settlement", detail: "POS batch #8841", status: "In Progress", priority: "Med", due: "12:00" },
-    { id: "TSK-101", title: "Restock welcome cards", detail: "Front desk cabinet", status: "Completed", priority: "Low", due: "08:45" },
-  ];
-}
-
-function seedReports(): ShiftReport[] {
-  return [
-    { id: "RPT-2408", dateIso: "2026-08-30", shift: "Morning", reporter: "John Doe", occupancy: "85%", income: "$5,200", status: "Submitted", notes: "VIP arrival handled at check-in.", createdAt: Date.parse("2026-08-30T09:40:00") },
-    { id: "RPT-2407", dateIso: "2026-08-29", shift: "Night", reporter: "Nary Chann", occupancy: "82%", income: "$4,880", status: "Submitted", notes: "Night audit balanced.", createdAt: Date.parse("2026-08-29T23:50:00") },
-    { id: "RPT-2406", dateIso: "2026-08-29", shift: "Afternoon", reporter: "Dara Lim", occupancy: "79%", income: "$4,460", status: "Approved", notes: "Two walk-ins accommodated.", createdAt: Date.parse("2026-08-29T15:05:00") },
-    { id: "RPT-2405", dateIso: "2026-08-28", shift: "Morning", reporter: "John Doe", occupancy: "77%", income: "$4,110", status: "Draft", notes: "", createdAt: Date.parse("2026-08-28T08:20:00") },
-  ];
-}
-
-function seedAudit(): AuditEvent[] {
-  return [
-    { id: "EV-904", dateIso: "2026-08-30", time: "09:42", user: "John Doe", event: "Updated cash variance", area: "Finance" },
-    { id: "EV-903", dateIso: "2026-08-30", time: "09:18", user: "Dara Lim", event: "Submitted shift report RPT-2406", area: "Report" },
-    { id: "EV-902", dateIso: "2026-08-30", time: "08:57", user: "John Doe", event: "Completed task TSK-101", area: "Tasks" },
-    { id: "EV-901", dateIso: "2026-08-30", time: "08:46", user: "Nary Chann", event: "Signed in", area: "Access" },
-  ];
-}
-
-function loadState(): FdrState {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as FdrState;
-      if (Array.isArray(parsed.tasks) && Array.isArray(parsed.reports) && Array.isArray(parsed.audit)) return parsed;
-    }
-  } catch {
-    /* fall through to seed */
-  }
-  return { tasks: seedTasks(), reports: seedReports(), audit: seedAudit() };
-}
-
-function loadSession(): User | null {
-  try {
-    const raw = localStorage.getItem(SESSION_KEY);
-    return raw ? (JSON.parse(raw) as User) : null;
-  } catch {
-    return null;
-  }
-}
-
-export function nowClock() {
-  return new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-}
-
-export function todayIso() {
-  const now = new Date();
-  const offsetMs = now.getTimezoneOffset() * 60000;
-  return new Date(now.getTime() - offsetMs).toISOString().slice(0, 10);
-}
-
-function nextId(prefix: string, ids: string[]) {
-  const peak = ids.reduce((max, id) => {
-    const numeric = Number(id.replace(prefix, ""));
-    return Number.isFinite(numeric) ? Math.max(max, numeric) : max;
-  }, 0);
-  return `${prefix}${peak + 1}`;
-}
-
-function auditEntry(state: FdrState, user: User | null, event: string, area: AuditArea): AuditEvent {
-  return {
-    id: nextId("EV-", state.audit.map((item) => item.id)),
-    dateIso: todayIso(),
-    time: nowClock(),
-    user: user?.name ?? "Front desk",
-    event,
-    area,
-  };
-}
-
-function occupancyPct(totalRooms: number, occupied: number) {
-  return totalRooms ? Math.min(100, Math.round((occupied / totalRooms) * 100)) : 0;
-}
-
-function estimateIncome(occupied: number) {
-  return `$${(Math.round((occupied * 61.2) / 10) * 10).toLocaleString("en-US")}`;
+  inquiries: Inquiry[];
+  feedback: FeedbackEntry[];
+  finance: FinanceEntry[];
+  users: AppUser[];
+  pendingUsers: AppUser[];
+  signIn: (email: string, password: string) => Promise<{ ok: boolean; reason?: LoginFailure }>;
+  signOut: () => Promise<void>;
+  register: (input: { name: string; email: string; password: string; department: string; shift: string }) => Promise<void>;
+  refresh: () => Promise<void>;
+  addTask: (task: { title: string; detail: string; priority: TaskPriority; due: string }) => Promise<void>;
+  updateTaskStatus: (id: string, status: TaskStatus) => Promise<void>;
+  submitReport: (input: ReportInput) => Promise<ShiftReport | null>;
+  saveDraft: (input: ReportInput) => Promise<void>;
+  approveReport: (id: string) => Promise<void>;
+  logInquiry: (input: { channel: string; category: string; guestName: string; details: string; outcome: "resolved" | "follow_up"; followUp: string }) => Promise<void>;
+  addFeedback: (input: { dateIso: string; channel: string; guestName: string; room: string; comment: string }) => Promise<void>;
+  addFinanceEntry: (input: { type: "income" | "expense" | "refund"; dateIso: string; shift: Shift; category: string; description: string; amount: number }) => Promise<void>;
+  setUserStatus: (id: number, status: "active" | "rejected" | "pending") => Promise<void>;
 }
 
 const StoreContext = createContext<StoreValue | undefined>(undefined);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<FdrState>(loadState);
-  const [user, setUser] = useState<User | null>(loadSession);
+  const [user, setUser] = useState<AppUser | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [tasks, setTasks] = useState<FdrTask[]>([]);
+  const [reports, setReports] = useState<ShiftReport[]>([]);
+  const [audit, setAudit] = useState<AuditEvent[]>([]);
+  const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [feedback, setFeedback] = useState<FeedbackEntry[]>([]);
+  const [finance, setFinance] = useState<FinanceEntry[]>([]);
+  const [users, setUsers] = useState<AppUser[]>([]);
+  const [pendingUsers, setPendingUsers] = useState<AppUser[]>([]);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch {
-      /* storage unavailable — session-only mode */
-    }
-  }, [state]);
+    api
+      .me()
+      .then((response) => setUser(response.user))
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false));
+  }, []);
 
-  const signIn = useCallback(
-    (email: string, password: string) => {
-      const match = accounts.find((account) => account.email === email && account.password === password);
-      if (!match) return false;
-      setUser(match.profile);
-      try {
-        localStorage.setItem(SESSION_KEY, JSON.stringify(match.profile));
-      } catch {
-        /* ignore */
-      }
-      setState((current) => ({ ...current, audit: [auditEntry(current, match.profile, "Signed in", "Access"), ...current.audit] }));
-      return true;
-    },
-    [],
-  );
+  const refresh = useCallback(async () => {
+    const state = await api.state();
+    setTasks(state.tasks);
+    setReports(state.reports);
+    setAudit(state.audit);
+    setInquiries(state.inquiries);
+    setFeedback(state.feedback);
+    setFinance(state.finance);
+    setUsers(state.users);
+    setPendingUsers(state.pendingUsers);
+  }, []);
 
-  const signOut = useCallback(() => {
-    setState((current) => ({ ...current, audit: [auditEntry(current, user, "Signed out", "Access"), ...current.audit] }));
-    setUser(null);
+  useEffect(() => {
+    if (!user) return;
+    refresh().catch(() => {
+      /* session may have expired — next mutation will surface it */
+    });
+  }, [user, refresh]);
+
+  const signIn = useCallback(async (email: string, password: string): Promise<{ ok: boolean; reason?: LoginFailure }> => {
     try {
-      localStorage.removeItem(SESSION_KEY);
-    } catch {
-      /* ignore */
+      const response = await api.login(email, password);
+      setUser(response.user);
+      return { ok: true };
+    } catch (error) {
+      const status = error instanceof Error && "status" in error ? (error as { status: number }).status : 0;
+      if (status === 403) return { ok: false, reason: /awaiting/i.test((error as Error).message) ? "pending" : "rejected" };
+      if (status === 401) return { ok: false, reason: "invalid" };
+      return { ok: false, reason: "network" };
     }
-  }, [user]);
+  }, []);
+
+  const signOut = useCallback(async () => {
+    try {
+      await api.logout();
+    } finally {
+      setUser(null);
+      setTasks([]);
+      setReports([]);
+      setAudit([]);
+      setInquiries([]);
+      setFeedback([]);
+      setFinance([]);
+      setUsers([]);
+      setPendingUsers([]);
+    }
+  }, []);
+
+  const register = useCallback(async (input: { name: string; email: string; password: string; department: string; shift: string }) => {
+    await api.register(input);
+  }, []);
 
   const addTask = useCallback(
-    (task: Omit<FdrTask, "id">) => {
-      setState((current) => ({
-        ...current,
-        tasks: [{ ...task, id: nextId("TSK-", current.tasks.map((item) => item.id)) }, ...current.tasks],
-        audit: [auditEntry(current, user, `Added task "${task.title}"`, "Tasks"), ...current.audit],
-      }));
+    async (task: { title: string; detail: string; priority: TaskPriority; due: string }) => {
+      await api.addTask(task);
+      await refresh();
     },
-    [user],
+    [refresh],
   );
 
   const updateTaskStatus = useCallback(
-    (id: string, status: TaskStatus) => {
-      setState((current) => ({
-        ...current,
-        tasks: current.tasks.map((task) => (task.id === id ? { ...task, status } : task)),
-        audit: [auditEntry(current, user, `Task ${id} → ${status}`, "Tasks"), ...current.audit],
-      }));
+    async (id: string, status: TaskStatus) => {
+      await api.updateTaskStatus(id, status);
+      await refresh();
     },
-    [user],
+    [refresh],
   );
 
   const submitReport = useCallback(
-    (input: ReportInput) => {
-      const report: ShiftReport = {
-        id: nextId("RPT-", state.reports.map((item) => item.id)),
-        dateIso: input.dateIso,
-        shift: input.shift,
-        reporter: user?.name ?? "Front desk",
-        occupancy: `${occupancyPct(input.totalRooms, input.occupied)}%`,
-        income: estimateIncome(input.occupied),
-        status: "Submitted",
-        notes: input.notes.trim(),
-        createdAt: Date.now(),
-      };
-      setState((current) => ({
-        ...current,
-        reports: [report, ...current.reports],
-        audit: [auditEntry(current, user, `Submitted shift report ${report.id}`, "Report"), ...current.audit],
-      }));
-      return report;
+    async (input: ReportInput) => {
+      const created = await api.submitReport(input);
+      await refresh();
+      return reports.find((report) => report.id === created.id) ?? null;
     },
-    [state, user],
+    [refresh, reports],
   );
 
   const saveDraft = useCallback(
-    (input: ReportInput) => {
-      setState((current) => {
-        const existing = current.reports.find((report) => report.status === "Draft" && report.dateIso === input.dateIso && report.shift === input.shift);
-        const draft: ShiftReport = existing
-          ? { ...existing, occupancy: `${occupancyPct(input.totalRooms, input.occupied)}%`, notes: input.notes.trim() }
-          : {
-              id: nextId("RPT-", current.reports.map((item) => item.id)),
-              dateIso: input.dateIso,
-              shift: input.shift,
-              reporter: user?.name ?? "Front desk",
-              occupancy: `${occupancyPct(input.totalRooms, input.occupied)}%`,
-              income: estimateIncome(input.occupied),
-              status: "Draft",
-              notes: input.notes.trim(),
-              createdAt: Date.now(),
-            };
-        return { ...current, reports: [draft, ...current.reports.filter((report) => report !== existing)] };
-      });
+    async (input: ReportInput) => {
+      await api.saveDraftReport(input);
+      await refresh();
     },
-    [user],
+    [refresh],
+  );
+
+  const approveReport = useCallback(
+    async (id: string) => {
+      await api.setReportStatus(id, "approved");
+      await refresh();
+    },
+    [refresh],
+  );
+
+  const logInquiry = useCallback(
+    async (input: { channel: string; category: string; guestName: string; details: string; outcome: "resolved" | "follow_up"; followUp: string }) => {
+      await api.addInquiry(input);
+      await refresh();
+    },
+    [refresh],
+  );
+
+  const addFeedback = useCallback(
+    async (input: { dateIso: string; channel: string; guestName: string; room: string; comment: string }) => {
+      await api.addFeedback(input);
+      await refresh();
+    },
+    [refresh],
+  );
+
+  const addFinanceEntry = useCallback(
+    async (input: { type: "income" | "expense" | "refund"; dateIso: string; shift: Shift; category: string; description: string; amount: number }) => {
+      await api.addFinanceEntry(input);
+      await refresh();
+    },
+    [refresh],
+  );
+
+  const setUserStatus = useCallback(
+    async (id: number, status: "active" | "rejected" | "pending") => {
+      await api.setUserStatus(id, status);
+      await refresh();
+    },
+    [refresh],
   );
 
   const value = useMemo<StoreValue>(
-    () => ({ ...state, user, signIn, signOut, addTask, updateTaskStatus, submitReport, saveDraft }),
-    [state, user, signIn, signOut, addTask, updateTaskStatus, submitReport, saveDraft],
+    () => ({
+      user,
+      loading,
+      tasks,
+      reports,
+      audit,
+      inquiries,
+      feedback,
+      finance,
+      users,
+      pendingUsers,
+      signIn,
+      signOut,
+      register,
+      refresh,
+      addTask,
+      updateTaskStatus,
+      submitReport,
+      saveDraft,
+      approveReport,
+      logInquiry,
+      addFeedback,
+      addFinanceEntry,
+      setUserStatus,
+    }),
+    [user, loading, tasks, reports, audit, inquiries, feedback, finance, users, pendingUsers, signIn, signOut, register, refresh, addTask, updateTaskStatus, submitReport, saveDraft, approveReport, logInquiry, addFeedback, addFinanceEntry, setUserStatus],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
@@ -285,4 +235,10 @@ export function useStore() {
   const context = useContext(StoreContext);
   if (!context) throw new Error("useStore must be used within StoreProvider");
   return context;
+}
+
+export function todayIso() {
+  const now = new Date();
+  const offsetMs = now.getTimezoneOffset() * 60000;
+  return new Date(now.getTime() - offsetMs).toISOString().slice(0, 10);
 }

@@ -310,3 +310,33 @@ button, a, select { cursor: pointer; }
   body.printing-closeout .closeout-photo,
   body.printing-handover .closeout-photo { display: none !important; }
 }
+
+/* Boot splash while the session is checked */
+.app-boot { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: var(--navy); }
+.app-boot img { width: 46px; height: 46px; }
+.app-boot-word { color: #d9e4ea; font: 700 14px var(--font-sans); letter-spacing: .3em; }
+
+/* Feedback entries list */
+.feedback-saved { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px; padding: 6px 10px; border-radius: 8px; background: rgba(56, 129, 106, .12); color: var(--success); font-size: 12px; font-weight: 600; }
+.feedback-list-panel { min-width: 0; }
+.feedback-list { display: flex; flex-direction: column; gap: 12px; max-height: 620px; overflow-y: auto; padding-right: 4px; }
+.feedback-row { background: var(--card, #fff); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-soft); }
+.feedback-row-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.feedback-row-head strong { font-size: 13px; }
+.feedback-row-head span { color: var(--muted); font-size: 11px; }
+.feedback-row p { margin: 8px 0 6px; font-size: 12.5px; line-height: 1.55; color: var(--ink); }
+.feedback-row em { font-style: normal; font-size: 10.5px; color: var(--muted); }
+
+/* Admin — approvals and team */
+.settings-empty { margin: 0; color: var(--muted); font-size: 12.5px; }
+.settings-divider { height: 1px; background: var(--line); margin: 18px 0; }
+.approval-list { display: flex; flex-direction: column; gap: 10px; }
+.approval-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--paper); flex-wrap: wrap; }
+.approval-person { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.approval-person strong { display: block; font-size: 13px; }
+.approval-person span { color: var(--muted); font-size: 11px; }
+.approval-actions { display: flex; gap: 8px; }
+.user-avatar.dark { background: var(--navy); color: #f6e4c2; }
+
+/* Shift sheet note */
+.shift-note { margin: 10px 0 0; padding: 9px 11px; border-radius: 8px; background: var(--fog); color: var(--muted); font-size: 11px; line-height: 1.5; }
