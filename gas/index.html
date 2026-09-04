@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FDR · របាយការណ៍ផ្នែកទទួលភ្ញៀវ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Heritage Operations: hospitality editorial, deep navy + Brass Ledger, Khmer-first type, ruled surfaces, restrained motion. */
+:root {
+  --navy: #0b2742;
+  --navy-2: #123955;
+  --navy-3: #1b4a69;
+  --brass: #b68a45;
+  --brass-light: #d2ad6f;
+  --fog: #f5f7f8;
+  --paper: #fbfcfc;
+  --ink: #1a2935;
+  --muted: #6e7f8d;
+  --line: #dce4e8;
+  --line-dark: #c5d1d7;
+  --success: #38816a;
+  --warning: #bc7a34;
+  --danger: #a64e4d;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-soft: 0 10px 32px rgba(11, 39, 66, .07);
+  --shadow-card: 0 2px 8px rgba(11, 39, 66, .05), 0 12px 30px rgba(11, 39, 66, .04);
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+  --font-khmer: "Noto Sans Khmer", "Khmer OS", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--fog);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { min-height: 100%; margin: 0; }
+body { min-width: 320px; background: var(--fog); color: var(--ink); }
+button, input, select, textarea { font: inherit; }
+button { border: 0; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid rgba(182, 138, 69, .28); outline-offset: 2px; }
+button, a, select { cursor: pointer; }
+
+:lang(km), [lang="km"] { font-family: var(--font-khmer); }
+
+.app-shell { min-height: 100vh; display: flex; background: var(--fog); }
+.sidebar { width: 252px; flex: 0 0 252px; min-height: 100vh; background: var(--navy); color: #d9e4ea; display: flex; flex-direction: column; padding: 22px 14px 16px; transition: width .22s var(--ease-out), transform .22s var(--ease-out); position: sticky; top: 0; height: 100vh; z-index: 20; overflow: hidden; }
+.sidebar-collapsed { width: 78px; flex-basis: 78px; }
+.sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 0 8px 24px; border-bottom: 1px solid rgba(220, 228, 232, .15); }
+.brand-lockup { display: flex; align-items: center; gap: 11px; background: transparent; color: white; padding: 0; }
+.brand-seal { width: 27px; height: 27px; object-fit: contain; position: relative; z-index: 1; }
+.seal-emblem { position: relative; width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid rgba(182,138,69,.75); border-radius: 12px 12px 16px 16px; background: linear-gradient(145deg, rgba(255,255,255,.13), rgba(182,138,69,.08)); box-shadow: inset 0 0 0 4px rgba(182,138,69,.08), 0 5px 15px rgba(0,0,0,.12); }
+.seal-emblem::before { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(210,173,111,.72); border-radius: 8px 8px 11px 11px; }
+.seal-emblem img { width: 29px; height: 29px; object-fit: contain; position: relative; z-index: 1; }
+.rail-seal { width: 34px; height: 34px; border-radius: 8px 8px 11px 11px; box-shadow: inset 0 0 0 3px rgba(182,138,69,.08); }
+.rail-seal::before { inset: 5px; border-radius: 5px 5px 8px 8px; }
+.rail-seal img { width: 22px; height: 22px; }
+.brand-wordmark { font-family: var(--font-sans); font-size: 18px; letter-spacing: .17em; font-weight: 700; }
+.icon-button { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9px; background: transparent; color: inherit; transition: background .18s ease, color .18s ease, transform .16s var(--ease-out); }
+.icon-button:hover { background: rgba(255,255,255,.1); }
+.icon-button:active, .primary-button:active, .secondary-button:active { transform: scale(.97); }
+.sidebar-collapse-button { color: #a9bbc6; }
+.rail-kicker { padding: 20px 10px 10px; color: #90a5b2; letter-spacing: .12em; font-size: 10px; white-space: nowrap; }
+.sidebar-collapsed .brand-wordmark, .sidebar-collapsed .rail-kicker, .sidebar-collapsed .nav-item span, .sidebar-collapsed .nav-count, .sidebar-collapsed .user-details, .sidebar-collapsed .logout-button { display: none; }
+.sidebar-collapsed .sidebar-header { justify-content: center; padding-inline: 0; }
+.sidebar-collapsed .brand-lockup { gap: 0; }
+.sidebar-collapsed .sidebar-collapse-button { position: absolute; right: 7px; top: 21px; }
+.sidebar-nav { display: flex; flex-direction: column; gap: 3px; padding: 5px 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.2) transparent; }
+.nav-item { width: 100%; color: #abc0ca; background: transparent; display: flex; align-items: center; gap: 12px; min-height: 40px; padding: 0 11px; border-radius: 8px; text-align: left; font-size: 13px; transition: background .18s ease, color .18s ease, transform .16s var(--ease-out); white-space: nowrap; }
+.nav-item:hover { background: rgba(255,255,255,.08); color: white; }
+.nav-item-active { background: rgba(182, 138, 69, .18); color: #f6e4c2; box-shadow: inset 3px 0 0 var(--brass); }
+.nav-item-active svg { color: var(--brass-light); }
+.nav-count { margin-left: auto; min-width: 20px; padding: 2px 5px; border-radius: 20px; background: rgba(255,255,255,.1); text-align: center; color: #dbe8e4; font-size: 10px; font-style: normal; }
+.sidebar-footer { margin-top: auto; display: flex; align-items: center; gap: 8px; padding: 15px 7px 3px; border-top: 1px solid rgba(220, 228, 232, .15); }
+.user-info { min-width: 0; display: flex; align-items: center; gap: 9px; flex: 1; }
+.user-avatar { width: 31px; height: 31px; flex: 0 0 31px; display: grid; place-items: center; border-radius: 50%; background: var(--brass); color: var(--navy); font: 700 10px var(--font-sans); }
+.user-details { display: flex; flex-direction: column; min-width: 0; }
+.user-details strong { color: white; font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-details span { color: #8fa5b2; font-size: 10px; margin-top: 3px; white-space: nowrap; }
+.logout-button { color: #99afba; flex: 0 0 31px; width: 31px; height: 31px; }
+
+.main-content { min-width: 0; flex: 1; }
+.topbar { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 34px; background: rgba(251,252,252,.92); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; backdrop-filter: blur(15px); }
+.topbar-left, .topbar-right { display: flex; align-items: center; min-width: 0; }
+.topbar-left { gap: 12px; }
+.topbar-left h1 { margin: 4px 0 0; font-size: 20px; font-weight: 700; letter-spacing: -.025em; color: var(--navy); }
+.topbar-right { gap: 8px; color: var(--muted); }
+.eyebrow { color: #82939d; font: 700 10px/1.2 var(--font-sans); letter-spacing: .14em; text-transform: uppercase; }
+.brass-eyebrow { color: var(--brass); display: flex; align-items: center; gap: 8px; }
+.pulse-dot { width: 7px; height: 7px; display: inline-block; border-radius: 50%; background: var(--brass); box-shadow: 0 0 0 4px rgba(182,138,69,.14); }
+.language-switch { min-width: 41px; height: 34px; color: var(--navy); background: #eef2f2; border-radius: 8px; font: 700 11px var(--font-sans); transition: background .18s ease, transform .16s var(--ease-out); }
+.language-switch:hover { background: #e1e8e8; }
+.notification-wrap { position: relative; }
+.notification-button { color: var(--navy); background: transparent; }
+.notification-button:hover { background: #edf1f1; }
+.notification-dot { position: absolute; top: 2px; right: 1px; min-width: 15px; height: 15px; padding: 0 3px; border-radius: 20px; background: var(--danger); color: white; font: 700 9px/15px var(--font-sans); }
+.notification-popover { position: absolute; top: 45px; right: -4px; width: 260px; padding: 16px; border: 1px solid var(--line); border-radius: 11px; background: white; box-shadow: var(--shadow-soft); z-index: 30; animation: pop-in .18s var(--ease-out); }
+.notification-popover::before { content: ""; position: absolute; right: 14px; top: -6px; width: 11px; height: 11px; background: white; border-top: 1px solid var(--line); border-left: 1px solid var(--line); transform: rotate(45deg); }
+.popover-heading { display: flex; justify-content: space-between; color: var(--navy); font-size: 13px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.popover-heading span { color: var(--brass); font-size: 11px; }
+.notification-popover p { margin: 11px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+.notification-popover button { margin-top: 13px; padding: 0; color: var(--brass); background: transparent; font-size: 11px; font-weight: 700; }
+.shift-select-wrap, .date-chip { display: flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 10px; color: var(--navy); background: #f1f4f4; border-radius: 8px; font-size: 11px; }
+.shift-select-wrap { border-left: 2px solid var(--brass); }
+.shift-select-wrap svg { color: var(--brass); }
+.shift-select-wrap select { max-width: 104px; color: var(--navy); border: 0; outline: 0; background: transparent; font-size: 11px; appearance: none; }
+.date-chip { color: var(--muted); background: transparent; padding-inline: 5px; white-space: nowrap; }
+.mobile-menu-button { display: none; color: var(--navy); }
+.spin-once svg { animation: spin .6s linear; }
+
+.view-container { max-width: 1480px; margin: 0 auto; padding: 34px; }
+.dashboard-view, .section-stack { animation: page-in .24s var(--ease-out); }
+.dashboard-intro, .section-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+.dashboard-intro h2, .section-header h2 { color: var(--navy); font-size: clamp(24px, 3vw, 32px); letter-spacing: -.035em; line-height: 1.1; margin: 8px 0 8px; font-weight: 700; }
+.dashboard-intro p, .section-header p { max-width: 620px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.intro-date { min-width: 210px; border-left: 2px solid var(--brass); padding: 4px 0 4px 16px; display: flex; flex-direction: column; gap: 4px; }
+.intro-date span { color: var(--muted); font: 700 9px var(--font-sans); letter-spacing: .11em; text-transform: uppercase; }
+.intro-date strong { color: var(--navy); font-size: 14px; }
+.intro-date small { color: var(--muted); font-size: 10px; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 13px; margin-bottom: 18px; }
+.stat-card { position: relative; min-height: 132px; display: flex; gap: 12px; align-items: flex-start; padding: 18px 16px; overflow: hidden; background: white; border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-card); transition: transform .18s var(--ease-out), box-shadow .18s ease; }
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(11,39,66,.1); }
+.stat-icon { width: 37px; height: 37px; flex: 0 0 37px; display: grid; place-items: center; border-radius: 10px; }
+.stat-icon.blue { color: #3c6c91; background: #eaf2f7; }
+.stat-icon.green { color: var(--success); background: #e8f2ee; }
+.stat-icon.amber { color: var(--warning); background: #f9f0e5; }
+.stat-icon.purple { color: #796b9d; background: #eeeaf6; }
+.stat-body { display: flex; flex-direction: column; min-width: 0; }
+.stat-label { color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stat-body strong { margin-top: 7px; color: var(--navy); font: 700 26px var(--font-sans); letter-spacing: -.04em; }
+.stat-sub { margin-top: 3px; color: #8796a0; font-size: 10px; }
+.trend { position: absolute; right: 12px; top: 15px; display: flex; align-items: center; gap: 2px; color: var(--success); font: 700 10px var(--font-sans); }
+.trend-down { color: var(--warning); }
+.content-grid { display: grid; grid-template-columns: minmax(0, 1.62fr) minmax(280px, .98fr); gap: 15px; }
+.panel { min-width: 0; background: white; border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-card); }
+.panel-heading, .table-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 17px 18px 14px; }
+.panel-heading > div { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.heading-icon { color: var(--brass); display: inline-flex; }
+.panel-heading h3, .table-toolbar h3 { margin: 0; color: var(--navy); font-size: 14px; font-weight: 700; }
+.panel-meta { display: flex; align-items: center; gap: 2px; color: var(--success); font: 700 11px var(--font-sans); }
+.text-button { display: inline-flex; align-items: center; gap: 4px; color: var(--brass); background: transparent; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.text-button:hover { color: var(--navy); }
+.chart-panel { min-height: 316px; }
+.chart-wrap { display: flex; height: 216px; padding: 7px 18px 0; }
+.chart-y-labels { width: 38px; display: flex; flex-direction: column; justify-content: space-between; padding: 4px 0 27px; color: #a2afb6; font: 9px var(--font-sans); }
+.bar-chart { min-width: 0; flex: 1; display: flex; align-items: stretch; justify-content: space-around; gap: 10px; border-bottom: 1px solid var(--line); background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(25% - 1px), #edf1f2 calc(25% - 1px), #edf1f2 25%); }
+.bar-column { position: relative; flex: 1; max-width: 54px; min-width: 22px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 0; background: transparent; }
+.bar-column i { width: 70%; max-width: 28px; height: var(--bar-height); min-height: 8px; display: block; border-radius: 5px 5px 2px 2px; background: #c9dce6; transition: height .25s var(--ease-out), background .18s ease, transform .18s var(--ease-out); }
+.bar-column:hover i, .bar-column-selected i { background: var(--brass); transform: scaleX(1.08); }
+.bar-value { position: absolute; bottom: calc(var(--bar-height) + 10px); opacity: 0; color: var(--navy); font: 700 10px var(--font-sans); transition: opacity .18s ease; }
+.bar-column:hover .bar-value, .bar-column-selected .bar-value { opacity: 1; }
+.bar-label { margin-top: 9px; padding-bottom: 7px; color: #85949d; font: 10px var(--font-sans); }
+.chart-footnote { display: flex; justify-content: space-between; padding: 14px 18px 16px; color: #8c9ba3; font-size: 10px; }
+.chart-footnote span { display: flex; align-items: center; gap: 6px; }
+.legend-swatch { width: 9px; height: 9px; display: inline-block; border-radius: 3px; background: var(--brass); }
+.alerts-panel { min-height: 316px; }
+.alert-list { display: flex; flex-direction: column; padding: 2px 18px 13px; }
+.alert-item { display: flex; gap: 10px; padding: 15px 0; border-bottom: 1px solid #edf1f2; }
+.alert-item:last-child { border-bottom: 0; }
+.alert-icon { width: 31px; height: 31px; flex: 0 0 31px; display: grid; place-items: center; border-radius: 9px; }
+.alert-item.warning .alert-icon { color: var(--warning); background: #fbf2e8; }
+.alert-item.info .alert-icon { color: #4e7696; background: #ebf3f7; }
+.alert-item.success .alert-icon { color: var(--success); background: #ebf4ef; }
+.alert-item div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.alert-item strong { color: var(--navy); font-size: 12px; font-weight: 700; }
+.alert-item span { color: var(--muted); font-size: 10px; line-height: 1.45; }
+.image-panel { position: relative; min-height: 275px; overflow: hidden; border: 0; background: var(--navy); }
+.image-panel img { width: 100%; height: 100%; min-height: 275px; object-fit: cover; display: block; opacity: .88; }
+.image-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,39,66,.06), rgba(11,39,66,.85)); }
+.image-panel-overlay { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 1; color: white; }
+.image-panel-overlay .eyebrow { color: var(--brass-light); }
+.image-panel-overlay strong { display: block; margin-top: 8px; font-size: 19px; letter-spacing: -.025em; }
+.image-panel-overlay p { margin: 6px 0 0; color: #d6e1e5; font-size: 11px; line-height: 1.5; }
+.tasks-summary { min-height: 275px; }
+.focus-list { padding: 0 18px 14px; }
+.focus-row { display: flex; align-items: center; gap: 10px; padding: 13px 0; border-bottom: 1px solid #edf1f2; }
+.focus-row:last-child { border-bottom: 0; }
+.priority-marker { width: 6px; height: 30px; flex: 0 0 6px; border-radius: 5px; background: var(--brass); }
+.priority-marker.high { background: var(--danger); }.priority-marker.med { background: var(--warning); }.priority-marker.low { background: var(--success); }
+.focus-row div { min-width: 0; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.focus-row strong { color: var(--navy); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.focus-row span, .focus-row small { color: var(--muted); font-size: 10px; }
+.focus-row small { color: var(--navy); font-weight: 700; }
+.full-width { grid-column: 1 / -1; }
+.recent-panel { overflow: hidden; }
+
+.section-intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+.section-aside-note { display: flex; align-items: center; gap: 7px; padding: 10px 12px; color: var(--brass); border-left: 2px solid var(--brass); background: #faf8f4; font-size: 11px; white-space: nowrap; }
+.toolbar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.primary-button, .secondary-button { min-height: 36px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 0 13px; border-radius: 8px; font-size: 11px; font-weight: 700; transition: transform .16s var(--ease-out), background .18s ease, box-shadow .18s ease, color .18s ease; }
+.primary-button { position: relative; color: white; background: var(--navy); border-top: 2px solid var(--brass); box-shadow: 0 4px 11px rgba(11,39,66,.14); }
+.primary-button:hover { background: var(--navy-2); box-shadow: 0 7px 16px rgba(11,39,66,.18); }
+.primary-button:disabled { opacity: .45; cursor: not-allowed; }
+.secondary-button { color: var(--navy); background: white; border: 1px solid var(--line-dark); }
+.secondary-button:hover { background: #f5f8f8; border-color: #a7b9c1; }
+.form-sheet, .closeout-sheet { background: white; border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-card); }
+.form-section { padding: 22px; border-bottom: 1px solid var(--line); }
+.form-section:last-of-type { border-bottom: 0; }
+.form-section-heading { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+.form-section-heading span { color: var(--brass); display: inline-flex; }
+.form-section-heading h3 { margin: 0; color: var(--navy); font-size: 14px; }
+.form-grid { display: grid; gap: 15px; }
+.form-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.form-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.form-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 15px; }
+.field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.field > span { display: flex; align-items: center; gap: 6px; color: #526875; font-size: 11px; font-weight: 600; }
+.field > span svg { color: var(--brass); }
+.field input, .field select, .field textarea, .toolbar-strip select, .compact-input, .search-field input { width: 100%; min-height: 39px; padding: 8px 10px; color: var(--navy); background: #fbfcfc; border: 1px solid var(--line); border-radius: 7px; outline: none; font-size: 12px; transition: border .18s ease, box-shadow .18s ease, background .18s ease; }
+.field textarea { resize: vertical; line-height: 1.5; }
+.field input:focus, .field select:focus, .field textarea:focus, .toolbar-strip select:focus, .compact-input:focus, .search-field input:focus { border-color: var(--brass); box-shadow: 0 0 0 3px rgba(182,138,69,.1); background: white; }
+.field input[readonly] { color: #74848d; background: #f3f6f6; }
+.field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+.auth-form .field input, .auth-form .field select { min-height: 44px; background: #f8faf9; }
+.auth-form .field input:focus, .auth-form .field select:focus { background: white; }
+.readonly-value { min-height: 39px; display: flex; flex-direction: column; justify-content: center; padding: 5px 10px; background: #f1f5f4; border: 1px solid var(--line); border-radius: 7px; }
+.readonly-value strong { color: var(--navy); font: 700 14px var(--font-sans); }.readonly-value span { color: var(--muted); font-size: 9px; margin-top: 2px; }
+.occupancy-progress { height: 6px; display: flex; align-items: center; position: relative; margin-top: 6px; background: #eaf0f0; border-radius: 20px; }
+.occupancy-progress span { height: 100%; display: block; border-radius: inherit; background: var(--brass); transition: width .2s ease; }
+.occupancy-progress b { position: absolute; left: calc(min(100%, var(--width, 85%)) + 8px); display: none; }
+.form-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 17px 22px 21px; }
+
+.toolbar-strip { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 11px 13px; margin-bottom: 17px; background: #edf2f2; border: 1px solid #e1e8e9; border-radius: 9px; }
+.toolbar-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }.toolbar-group select { width: auto; min-width: 138px; }
+.toolbar-note { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 10px; white-space: nowrap; }
+.kanban-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+.kanban-column { min-height: 390px; padding: 13px; background: #edf2f2; border: 1px solid #e1e8e9; border-radius: var(--radius-md); }
+.kanban-heading { display: flex; align-items: center; justify-content: space-between; margin: 0 2px 13px; }.kanban-heading > div { display: flex; align-items: center; gap: 8px; }.kanban-heading h3 { margin: 0; color: var(--navy); font-size: 12px; }.kanban-marker { width: 8px; height: 8px; border-radius: 50%; }.kanban-marker.amber { background: var(--warning); }.kanban-marker.blue { background: #4e7797; }.kanban-marker.green { background: var(--success); }.count-badge { width: 21px; height: 21px; display: grid; place-items: center; color: var(--navy); background: white; border-radius: 50%; font: 700 10px var(--font-sans); }
+.kanban-cards { display: flex; flex-direction: column; gap: 9px; }.task-card { padding: 14px; background: white; border: 1px solid var(--line); border-radius: 9px; box-shadow: 0 3px 8px rgba(11,39,66,.04); transition: transform .18s var(--ease-out), box-shadow .18s ease; }.task-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }.task-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }.priority-chip { padding: 4px 7px; border-radius: 4px; font: 700 9px var(--font-sans); }.priority-chip.high { color: var(--danger); background: #f8eaea; }.priority-chip.med { color: var(--warning); background: #fbf1e5; }.priority-chip.low { color: var(--success); background: #e9f3ee; }.icon-button.tiny { width: 24px; height: 24px; color: #9cabb2; }.task-card > strong { color: var(--navy); font-size: 12px; }.task-card p { margin: 6px 0 13px; color: var(--muted); font-size: 10px; line-height: 1.45; }.task-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid #edf1f2; }.task-card-footer > span { display: flex; align-items: center; gap: 4px; color: #8b9aa2; font-size: 10px; }.task-status-action { display: flex; align-items: center; gap: 3px; padding: 0; color: var(--brass); background: transparent; font-size: 10px; font-weight: 700; }
+
+.tabs-strip { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 16px; padding-bottom: 2px; border-bottom: 1px solid var(--line); }.tabs-strip button { position: relative; min-height: 38px; padding: 0 10px; color: var(--muted); background: transparent; font-size: 11px; white-space: nowrap; }.tabs-strip button::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: -3px; height: 2px; background: transparent; }.tabs-strip button:hover { color: var(--navy); }.tabs-strip button.tab-active { color: var(--navy); font-weight: 700; }.tabs-strip button.tab-active::after { background: var(--brass); }
+.table-panel { overflow: hidden; }.data-table-wrap { overflow-x: auto; }.data-table { width: 100%; border-collapse: collapse; min-width: 690px; }.data-table th { padding: 10px 18px; color: #8a9aa3; background: #f7f9f9; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: left; font: 700 9px var(--font-sans); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }.data-table td { padding: 13px 18px; color: #516774; border-bottom: 1px solid #edf1f2; font-size: 11px; white-space: nowrap; }.data-table tbody tr:last-child td { border-bottom: 0; }.data-table tbody tr:hover td { background: #fbfcfc; }.status-pill { display: inline-flex; align-items: center; gap: 4px; padding: 4px 7px; border-radius: 4px; font: 700 9px var(--font-sans); }.status-pill.approved { color: var(--success); background: #e9f3ee; }.status-pill.submitted { color: #4a7598; background: #eaf2f7; }.status-pill.pending { color: var(--warning); background: #fbf0e1; }.status-pill.draft { color: #7d8790; background: #eef1f2; }
+.calculator-panel { padding-bottom: 21px; }.calculator-panel > .form-grid, .calculator-panel > .variance-result, .calculator-panel > .calc-metrics, .calculator-panel > .insight-note { margin-inline: 18px; }.variance-value { min-height: 39px; display: flex; align-items: center; padding: 0 10px; border-radius: 7px; font: 700 15px var(--font-sans); background: #fbf0e8; }.variance-value.negative, .negative-text { color: var(--danger); }.variance-value.positive, .success-text { color: var(--success); }.variance-result { display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; padding: 13px; border-radius: 8px; }.variance-result.negative { color: var(--danger); background: #fcf1ed; }.variance-result.positive { color: var(--success); background: #edf6f1; }.variance-result div { display: flex; flex-direction: column; gap: 4px; }.variance-result strong { font-size: 12px; }.variance-result span { color: var(--muted); font-size: 10px; }.calc-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }.calc-metrics > div { padding: 13px; background: #f5f8f8; border-radius: 8px; }.calc-metrics span, .calc-metrics small { display: block; color: var(--muted); font-size: 10px; }.calc-metrics strong { display: block; margin: 7px 0 4px; color: var(--navy); font: 700 20px var(--font-sans); }.insight-note { display: flex; align-items: center; gap: 8px; margin-top: 16px; color: var(--brass); font-size: 11px; }.insight-note span { color: var(--muted); }
+
+.shift-report-output { background: white; border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-card); overflow: hidden; }.report-summary-banner { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; padding: 22px; background: var(--navy); color: white; }.report-summary-banner .eyebrow { color: var(--brass-light); }.report-summary-banner h3 { margin: 8px 0 0; font-size: 19px; }.shift-report-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; padding: 18px; }.shift-card { padding: 16px; border: 1px solid var(--line); border-radius: 10px; }.shift-card-top { display: flex; align-items: center; gap: 9px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }.shift-icon, .roster-icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; }.shift-icon.sunrise, .roster-icon.sunrise { color: #b97b37; background: #fbf0e4; }.shift-icon.sun, .roster-icon.sun { color: #b68a45; background: #f9f1dc; }.shift-icon.moon, .roster-icon.moon { color: #597a98; background: #ebf1f6; }.shift-card-top div { display: flex; flex-direction: column; gap: 3px; }.shift-card-top strong { color: var(--navy); font-size: 12px; }.shift-card-top span { color: var(--muted); font-size: 10px; }.shift-card dl { margin: 13px 0; }.shift-card dl div { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #edf1f2; }.shift-card dt { color: var(--muted); font-size: 10px; }.shift-card dd { margin: 0; color: var(--navy); font: 700 11px var(--font-sans); }.shift-card .text-button { padding: 0; }
+.empty-state { min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 35px; text-align: center; background: rgba(255,255,255,.55); border: 1px dashed var(--line-dark); border-radius: var(--radius-md); }.empty-state > span { width: 54px; height: 54px; display: grid; place-items: center; color: var(--brass); background: #fbf6ed; border-radius: 50%; }.empty-state h3 { margin: 15px 0 6px; color: var(--navy); font-size: 15px; }.empty-state p { max-width: 330px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+
+.closeout-sheet { overflow: hidden; }.closeout-banner { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; padding: 24px; color: white; background: var(--navy); }.closeout-banner .eyebrow { color: var(--brass-light); }.closeout-banner h3 { max-width: 620px; margin: 8px 0 0; font-size: 19px; line-height: 1.35; }.closeout-sheet > .form-grid { padding: 20px 22px 4px; }.shift-block { margin: 16px 22px; padding: 18px; border: 1px solid var(--line); border-left: 4px solid var(--brass); border-radius: 9px; }.shift-block.morning { border-left-color: #be7c39; }.shift-block.afternoon { border-left-color: var(--brass); }.shift-block.night { border-left-color: #577995; }.shift-block-heading { display: flex; align-items: center; gap: 9px; margin-bottom: 17px; }.shift-block-rule { width: 19px; height: 2px; background: currentColor; color: var(--brass); }.shift-block h3 { margin: 0; color: var(--navy); font-size: 13px; }.shift-block-time { margin-left: auto; color: var(--muted); font: 700 10px var(--font-sans); }.shift-block .form-grid { margin-bottom: 14px; }
+
+.feedback-layout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); gap: 15px; }.feedback-form-panel { padding-bottom: 4px; }.feedback-form-panel .form-grid, .feedback-form-panel > .field { margin: 0 18px 15px; }.feedback-form-panel .form-actions { padding-right: 18px; }.feedback-empty { min-height: 430px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 35px; text-align: center; background: #f4f7f7; border: 1px solid var(--line); border-radius: var(--radius-md); }.empty-seal { width: 72px; height: 72px; display: grid; place-items: center; margin-bottom: 15px; border-radius: 50%; background: white; box-shadow: var(--shadow-soft); }.empty-seal img { width: 44px; height: 44px; }.feedback-empty h3 { max-width: 280px; margin: 0 0 8px; color: var(--navy); font-size: 16px; line-height: 1.4; }.feedback-empty p { max-width: 290px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+
+.report-metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 13px; margin-bottom: 15px; }.metric-block { padding: 17px; background: white; border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-card); }.metric-block > span { color: var(--muted); font-size: 10px; }.metric-block strong { display: block; margin: 8px 0 6px; color: var(--navy); font: 700 23px var(--font-sans); letter-spacing: -.035em; }.metric-block small { display: flex; align-items: center; gap: 3px; color: var(--success); font: 700 10px var(--font-sans); }.two-column { grid-template-columns: 1.25fr .75fr; }.line-chart { height: 220px; padding: 14px 18px 15px; }.line-chart-path { position: relative; height: 165px; border-bottom: 1px solid var(--line); background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(33.333% - 1px), #edf1f2 calc(33.333% - 1px), #edf1f2 33.333%); }.line-chart-path span { position: absolute; width: 10px; height: 10px; z-index: 1; border: 3px solid white; border-radius: 50%; background: var(--brass); box-shadow: 0 0 0 1px var(--brass); }.line-labels { display: flex; justify-content: space-between; padding-top: 10px; color: #93a2aa; font: 10px var(--font-sans); }.quality-list { padding: 2px 18px 17px; }.quality-row { padding: 15px 0; border-bottom: 1px solid #edf1f2; }.quality-row:last-child { border-bottom: 0; }.quality-row > div:first-child { display: flex; justify-content: space-between; margin-bottom: 9px; }.quality-row span { color: var(--muted); font-size: 11px; }.quality-row strong { color: var(--navy); font: 700 11px var(--font-sans); }.quality-bar { height: 6px; overflow: hidden; background: #e9eff0; border-radius: 10px; }.quality-bar i { height: 100%; display: block; background: var(--brass); border-radius: inherit; }
+.yearly-hero { position: relative; min-height: 240px; display: flex; align-items: flex-end; margin-bottom: 15px; overflow: hidden; border-radius: var(--radius-md); background: var(--navy); }.yearly-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .72; }.yearly-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,39,66,.94), rgba(11,39,66,.28)); }.yearly-hero > div { position: relative; z-index: 1; max-width: 550px; padding: 30px; color: white; }.yearly-hero .eyebrow { color: var(--brass-light); }.yearly-hero h3 { margin: 9px 0 8px; font-size: 25px; letter-spacing: -.035em; }.yearly-hero p { margin: 0; color: #dae5e8; font-size: 12px; line-height: 1.55; }
+.search-field { display: flex; align-items: center; gap: 8px; min-width: 240px; padding: 0 10px; background: white; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); }.search-field input { min-height: 35px; padding-left: 0; border: 0; background: transparent; }.search-field input:focus { box-shadow: none; }.timeline-panel { padding: 20px 22px; }.audit-date { display: flex; align-items: baseline; justify-content: space-between; padding: 0 0 17px 76px; border-bottom: 1px solid var(--line); }.audit-date strong { color: var(--navy); font-size: 12px; }.audit-row { display: grid; grid-template-columns: 49px 20px minmax(0,1fr); gap: 0; min-height: 67px; }.audit-time { padding-top: 21px; color: var(--muted); font: 700 10px var(--font-sans); }.audit-line { position: relative; border-left: 1px solid var(--line-dark); }.audit-line::before { content: ""; position: absolute; left: -5px; top: 21px; width: 9px; height: 9px; border: 2px solid white; border-radius: 50%; background: var(--brass); box-shadow: 0 0 0 1px var(--brass); }.audit-event { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 17px 0 17px 14px; border-bottom: 1px solid #edf1f2; }.audit-event div { display: flex; flex-direction: column; gap: 4px; }.audit-event strong { color: var(--navy); font-size: 12px; }.audit-event span { color: var(--muted); font-size: 10px; }.audit-event em { color: var(--brass); font: 700 9px var(--font-sans); text-transform: uppercase; font-style: normal; }
+.shift-roster { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }.roster-card { position: relative; display: flex; align-items: flex-start; gap: 12px; min-height: 180px; padding: 18px; background: white; border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-card); }.roster-card > div { min-width: 0; }.roster-card h3 { margin: 7px 0 13px; color: var(--navy); font-size: 17px; }.roster-card strong { display: block; color: var(--ink); font-size: 12px; }.roster-card p { margin: 4px 0 0; color: var(--muted); font-size: 10px; }.roster-card .status-pill { position: absolute; right: 15px; bottom: 15px; }
+.settings-layout { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 15px; }.settings-nav { display: flex; flex-direction: column; gap: 3px; }.settings-nav button { display: flex; align-items: center; gap: 9px; min-height: 38px; padding: 0 11px; color: var(--muted); background: transparent; border-radius: 7px; text-align: left; font-size: 11px; }.settings-nav button:hover, .settings-nav button.settings-nav-active { color: var(--navy); background: white; box-shadow: var(--shadow-card); }.settings-nav-active svg { color: var(--brass); }.settings-panel { padding-bottom: 4px; }.settings-panel .panel-heading { border-bottom: 1px solid var(--line); }.settings-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 17px 18px; border-bottom: 1px solid #edf1f2; }.settings-row > div { display: flex; flex-direction: column; gap: 5px; }.settings-row strong { color: var(--navy); font-size: 12px; }.settings-row span { color: var(--muted); font-size: 10px; line-height: 1.4; }.setting-value { color: var(--navy) !important; font: 700 11px var(--font-sans); }
+
+.auth-screen { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(420px, .85fr); background: var(--navy); }
+.auth-visual { position: relative; min-height: 100vh; background-position: center; background-size: cover; display: flex; flex-direction: column; justify-content: space-between; padding: 38px 52px; color: white; }
+.auth-visual-compact { background-position: center; }
+.visual-stamp { display: flex; align-items: center; gap: 10px; color: #dfe9ea; font: 700 10px var(--font-sans); letter-spacing: .17em; }
+.visual-stamp .seal-emblem { width: 36px; height: 36px; border-radius: 9px 9px 12px 12px; }
+.visual-stamp .seal-emblem::before { inset: 5px; border-radius: 6px 6px 8px 8px; }
+.visual-stamp .seal-emblem img { width: 23px; height: 23px; }
+.visual-stamp > span:last-child { padding-top: 1px; }
+.visual-copy { max-width: 490px; padding-bottom: 9vh; }
+.visual-copy .eyebrow { color: var(--brass-light); }
+.visual-copy h2 { margin: 14px 0 13px; color: white; font-size: clamp(34px, 5vw, 62px); line-height: 1.02; letter-spacing: -.055em; }
+.visual-copy p:last-child { max-width: 400px; margin: 0; color: #d0dfe3; font-size: 13px; line-height: 1.7; }
+.visual-footer { display: flex; justify-content: space-between; color: #a9c1c8; font: 700 9px var(--font-sans); letter-spacing: .14em; }
+.auth-panel { position: relative; display: flex; align-items: center; min-height: 100vh; padding: 44px 7vw; background: var(--paper); }
+.auth-language { position: absolute; top: 30px; right: 32px; min-height: 33px; padding: 0 10px; color: var(--navy); background: #eef2f1; border-radius: 7px; font: 700 10px var(--font-sans); }
+.auth-panel-inner { width: min(100%, 410px); margin: auto; }
+.auth-heading { position: relative; margin-bottom: 28px; padding-bottom: 19px; border-bottom: 1px solid var(--line); }
+.auth-heading::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 48px; height: 2px; background: var(--brass); }
+.auth-mark { width: 58px; height: 58px; display: grid; place-items: center; margin-bottom: 18px; color: var(--brass); background: #f5eee2; border-radius: 12px; }
+.auth-mark img { width: 30px; height: 30px; object-fit: contain; }
+.auth-heading h1 { margin: 9px 0 7px; color: var(--navy); font-size: 30px; letter-spacing: -.045em; line-height: 1.2; font-weight: 700; }
+.auth-heading > p:last-child { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+.auth-form { display: flex; flex-direction: column; gap: 15px; }
+.auth-form::before { content: "01 / VERIFY IDENTITY"; display: block; margin-bottom: -2px; color: var(--brass); font: 700 9px var(--font-sans); letter-spacing: .14em; }
+.auth-form .primary-button { margin-top: 4px; min-height: 45px; }
+.auth-form .primary-button .btn-arrow { margin-left: auto; color: var(--brass-light); }
+.auth-hint { margin: 16px 0 0; color: #9ba8ad; font-size: 10px; }
+.auth-register-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 20px; padding: 0; color: var(--brass); background: transparent; font-size: 11px; font-weight: 700; }
+.auth-register-link:hover { color: var(--navy); }
+.back-link { display: inline-flex; align-items: center; gap: 5px; margin-bottom: 24px; padding: 0; color: var(--muted); background: transparent; font-size: 11px; }
+.back-link:hover { color: var(--navy); }
+.mobile-brand { display: none; }
+
+.modal-backdrop { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; background: rgba(11,39,66,.48); backdrop-filter: blur(4px); animation: fade-in .16s ease; }
+.modal-sheet { width: min(100%, 480px); overflow: hidden; border-radius: 14px; background: white; box-shadow: 0 24px 70px rgba(11,39,66,.25); animation: modal-in .2s var(--ease-out); }
+.modal-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; padding: 20px 21px; background: var(--navy); color: white; }
+.modal-heading h2 { margin: 7px 0 0; font-size: 20px; }
+.modal-heading .eyebrow { color: var(--brass-light); }
+.modal-heading .icon-button { color: #dce6e8; }
+.modal-heading .icon-button:hover { background: rgba(255,255,255,.12); }
+.modal-body { display: flex; flex-direction: column; gap: 15px; padding: 21px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 21px 20px; border-top: 1px solid var(--line); }
+
+@keyframes page-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pop-in { from { opacity: 0; transform: translateY(-4px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes modal-in { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 1180px) { .view-container { padding: 28px 24px; }.topbar { padding-inline: 24px; }.auth-screen { grid-template-columns: minmax(0, 1fr) minmax(390px, .82fr); }.auth-visual { padding-inline: 38px; }.stats-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }.content-grid { grid-template-columns: 1fr 1fr; }.image-panel { grid-column: 1 / 2; }.tasks-summary { grid-column: 2 / 3; }.recent-panel { grid-column: 1 / -1; } }
+@media (max-width: 900px) { .sidebar { position: fixed; transform: translateX(-100%); box-shadow: 12px 0 32px rgba(11,39,66,.18); }.sidebar-mobile-open { transform: translateX(0); }.sidebar-collapsed { width: 252px; }.sidebar-collapsed .brand-wordmark, .sidebar-collapsed .rail-kicker, .sidebar-collapsed .nav-item span, .sidebar-collapsed .nav-count, .sidebar-collapsed .user-details, .sidebar-collapsed .logout-button { display: initial; }.sidebar-collapsed .sidebar-header { justify-content: space-between; padding-inline: 8px; }.sidebar-collapsed .brand-lockup { gap: 11px; }.sidebar-collapsed .sidebar-collapse-button { position: static; }.mobile-menu-button { display: inline-flex; }.topbar { padding: 14px 18px; }.topbar-right .date-chip { display: none; }.view-container { padding: 25px 18px; }.auth-screen { display: block; }.auth-visual { min-height: 260px; height: 35vh; }.auth-visual .visual-copy { padding-bottom: 0; }.auth-visual .visual-copy h2 { font-size: 34px; }.auth-visual .visual-copy p:last-child, .auth-visual .visual-footer { display: none; }.auth-panel { min-height: 65vh; padding: 40px 28px 50px; }.settings-layout { grid-template-columns: 1fr; }.settings-nav { display: grid; grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 680px) { .topbar { gap: 9px; }.topbar-left h1 { font-size: 17px; }.topbar-right { gap: 3px; }.topbar-right .shift-select-wrap { max-width: 36px; padding: 0 9px; }.shift-select-wrap select, .shift-select-wrap .chev { display: none; }.language-switch { min-width: 36px; }.view-container { padding: 22px 13px; }.dashboard-intro, .section-header, .section-intro { display: block; }.intro-date { margin-top: 18px; }.section-header > .toolbar-actions, .section-header > .primary-button { margin-top: 15px; }.stats-grid { gap: 9px; }.stat-card { min-height: 118px; padding: 14px 12px; }.stat-body strong { font-size: 22px; }.stat-label { font-size: 10px; }.content-grid, .feedback-layout, .two-column { display: flex; flex-direction: column; }.image-panel, .tasks-summary { min-height: 240px; }.kanban-board { display: flex; flex-direction: column; }.kanban-column { min-height: auto; }.form-grid.two, .form-grid.three, .form-grid.four, .field-row, .shift-report-grid, .report-metric-grid, .shift-roster { grid-template-columns: 1fr; }.form-grid.four { margin-bottom: 0; }.form-grid > .field { margin-bottom: 13px; }.form-section { padding: 18px 15px; }.form-actions { padding-inline: 15px; flex-direction: column-reverse; align-items: stretch; }.form-actions button { width: 100%; }.toolbar-strip { align-items: flex-start; flex-direction: column; }.toolbar-note { margin-left: 3px; }.tabs-strip { margin-bottom: 11px; }.table-toolbar { align-items: flex-start; flex-direction: column; }.data-table th, .data-table td { padding-inline: 12px; }.closeout-sheet > .form-grid { padding-inline: 15px; }.shift-block { margin-inline: 15px; padding: 14px; }.shift-block-heading { align-items: flex-start; flex-wrap: wrap; }.shift-block-time { width: 100%; margin-left: 28px; }.closeout-banner { padding: 19px 15px; }.closeout-banner h3 { font-size: 16px; }.search-field { min-width: 0; margin-top: 14px; }.audit-date { padding-left: 48px; }.audit-row { grid-template-columns: 43px 16px minmax(0, 1fr); }.audit-event { padding-left: 10px; align-items: flex-start; flex-direction: column; }.settings-nav { grid-template-columns: 1fr 1fr; }.settings-row { align-items: flex-start; flex-direction: column; gap: 12px; }.auth-panel { padding: 38px 20px 42px; }.auth-language { top: 18px; right: 18px; }.auth-panel-inner { width: 100%; }.mobile-brand { display: flex; align-items: center; gap: 7px; margin-bottom: 25px; color: var(--navy); font: 700 16px var(--font-sans); letter-spacing: .16em; }.mobile-brand img { width: 28px; height: 28px; }.auth-mark { display: none; }.auth-heading h1 { font-size: 24px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+@media print { .sidebar, .topbar, .section-header > .toolbar-actions, .primary-button, .secondary-button { display: none !important; }.view-container { padding: 0; }.app-shell { display: block; }.main-content { width: 100%; }.closeout-sheet, .shift-report-output { box-shadow: none; } }
+
+@page { size: A4; margin: 13mm; }
+@media print {
+  body.printing-closeout .sidebar,
+  body.printing-closeout .topbar,
+  body.printing-closeout .section-header,
+  body.printing-closeout .toolbar-actions,
+  body.printing-closeout .form-actions,
+  body.printing-closeout .closeout-sheet > .form-grid:first-of-type input,
+  body.printing-closeout .closeout-sheet > .form-grid:first-of-type select,
+  body.printing-handover .sidebar,
+  body.printing-handover .topbar,
+  body.printing-handover .section-header,
+  body.printing-handover .toolbar-actions,
+  body.printing-handover .text-button,
+  body.printing-handover .status-pill { display: none !important; }
+  body.printing-closeout .main-content,
+  body.printing-handover .main-content { width: 100%; }
+  body.printing-closeout .view-container,
+  body.printing-handover .view-container { max-width: none; padding: 0; }
+  body.printing-closeout .section-stack,
+  body.printing-handover .section-stack { display: block; }
+  body.printing-closeout .closeout-sheet,
+  body.printing-handover .shift-report-output { width: 100%; border: 0; box-shadow: none; border-radius: 0; }
+  body.printing-closeout .closeout-banner,
+  body.printing-handover .report-summary-banner { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  body.printing-closeout .closeout-banner { padding: 13mm 0 8mm; }
+  body.printing-closeout .closeout-sheet > .form-grid { padding: 7mm 0 2mm; }
+  body.printing-closeout .shift-block { margin: 5mm 0; padding: 5mm; break-inside: avoid; }
+  body.printing-closeout .shift-block .field input,
+  body.printing-closeout .shift-block .field textarea,
+  body.printing-closeout .closeout-sheet > .form-grid input,
+  body.printing-closeout .closeout-sheet > .form-grid select { background: white; border-color: #bcc9cf; color: #1a2935; }
+  body.printing-closeout .shift-block .readonly-value { background: white; }
+  body.printing-handover .report-summary-banner { padding: 10mm 8mm; }
+  body.printing-handover .shift-report-grid { grid-template-columns: 1fr; gap: 5mm; padding: 8mm; }
+  body.printing-handover .shift-card { break-inside: avoid; padding: 6mm; }
+  body.printing-handover .shift-card dl { margin-bottom: 0; }
+  body.printing-handover .shift-card-top { padding-bottom: 4mm; }
+  body.printing-closeout .eyebrow,
+  body.printing-handover .eyebrow { color: #8a642e !important; }
+}
+
+.closeout-photo { margin-top: 18px; }
+@media print {
+  body.printing-closeout .closeout-photo,
+  body.printing-handover .closeout-photo { display: none !important; }
+}
+
+.app-boot { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: var(--navy); }
+.app-boot img { width: 46px; height: 46px; }
+.app-boot-word { color: #d9e4ea; font: 700 14px var(--font-sans); letter-spacing: .3em; }
+
+/* Toasts */
+.toast-region { position: fixed; top: 16px; right: 16px; z-index: 90; display: flex; flex-direction: column; gap: 8px; max-width: min(92vw, 360px); }
+.toast { display: flex; align-items: center; gap: 9px; padding: 11px 14px; background: white; border: 1px solid var(--line); border-left-width: 3px; border-radius: 10px; box-shadow: var(--shadow-soft); font-size: 12px; color: var(--ink); animation: pop-in .18s var(--ease-out); }
+.toast.success { border-left-color: var(--success); } .toast.success svg { color: var(--success); }
+.toast.error { border-left-color: var(--danger); } .toast.error svg { color: var(--danger); }
+.toast.info { border-left-color: #4e7696; } .toast.info svg { color: #4e7696; }
+
+/* Feedback entries list */
+.feedback-saved { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px; padding: 6px 10px; border-radius: 8px; background: rgba(56, 129, 106, .12); color: var(--success); font-size: 12px; font-weight: 600; }
+.feedback-list-panel { min-width: 0; }
+.feedback-list { display: flex; flex-direction: column; gap: 12px; max-height: 620px; overflow-y: auto; padding-right: 4px; }
+.feedback-row { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-soft); }
+.feedback-row-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.feedback-row-head strong { font-size: 13px; }
+.feedback-row-head span { color: var(--muted); font-size: 11px; }
+.feedback-row p { margin: 8px 0 6px; font-size: 12.5px; line-height: 1.55; color: var(--ink); }
+.feedback-row em { font-style: normal; font-size: 10.5px; color: var(--muted); }
+
+/* Admin — approvals and team */
+.settings-empty { margin: 0; color: var(--muted); font-size: 12.5px; }
+.settings-divider { height: 1px; background: var(--line); margin: 18px 0; }
+.approval-list { display: flex; flex-direction: column; gap: 10px; padding: 4px 18px 6px; }
+.approval-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--paper); flex-wrap: wrap; }
+.approval-person { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.approval-person strong { display: block; font-size: 13px; }
+.approval-person span { color: var(--muted); font-size: 11px; }
+.approval-actions { display: flex; gap: 8px; }
+.user-avatar.dark { background: var(--navy); color: #f6e4c2; }
+
+/* Shift sheet note */
+.shift-note { margin: 10px 0 0; padding: 9px 11px; border-radius: 8px; background: var(--fog); color: var(--muted); font-size: 11px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="app-boot">
+    <img id="boot-seal" src="" alt="">
+    <span class="app-boot-word">FDR</span>
+  </div>
+</div>
+
+<!-- Brand assets (base64 images + seal) — injected from assets.html -->
+<script>
+<?!= include('assets'); ?>
+</script>
+
+<script>
+(function () {
+'use strict';
+
+/* ============================= helpers ============================= */
+
+var A = window.FDR_ASSETS || {};
+
+function esc(value) {
+  return String(value === null || value === undefined ? '' : value)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function cn() {
+  var out = [];
+  for (var i = 0; i < arguments.length; i++) if (arguments[i]) out.push(arguments[i]);
+  return out.join(' ');
+}
+function todayIso() {
+  try {
+    return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Phnom_Penh', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+  } catch (e) {
+    return new Date().toISOString().slice(0, 10);
+  }
+}
+function formatDate(date, language) {
+  return new Intl.DateTimeFormat(language === 'km' ? 'km-KH' : 'en-US', {
+    weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+  }).format(date);
+}
+function formatMoney(amount) {
+  return '$' + Number(amount || 0).toLocaleString('en-US', { maximumFractionDigits: 2 });
+}
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+/* Inline icon set (24×24 stroke icons, same geometry language as the web build). */
+var ICONS = {
+  'layout-dashboard': '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+  'file-text': '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
+  'activity': '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+  'clipboard-list': '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/>',
+  'wallet': '<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>',
+  'message-circle': '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  'clipboard-check': '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
+  'star': '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  'calendar-days': '<path d="M8 2v4"/><path d="M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/>',
+  'bar-chart-3': '<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
+  'history': '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/>',
+  'shield-check': '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  'users': '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  'settings': '<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>',
+  'menu': '<line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/>',
+  'bell': '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+  'sunrise': '<path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/>',
+  'sun': '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+  'moon': '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+  'chevron-down': '<path d="m6 9 6 6 6-6"/>',
+  'refresh-cw': '<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>',
+  'log-in': '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/>',
+  'log-out': '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/>',
+  'arrow-up-right': '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
+  'arrow-down-right': '<path d="m7 7 10 10"/><path d="M17 7v10H7"/>',
+  'plus': '<path d="M5 12h14"/><path d="M12 5v14"/>',
+  'download': '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>',
+  'printer': '<polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>',
+  'save': '<path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/>',
+  'send': '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  'search': '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  'x': '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  'check': '<path d="M20 6 9 17l-5-5"/>',
+  'check-circle': '<path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/>',
+  'more-horizontal': '<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>',
+  'user-plus': '<path d="M2 21a8 8 0 0 1 13.292-6"/><circle cx="10" cy="8" r="5"/><path d="M19 16v6"/><path d="M22 19h-6"/>',
+  'palette': '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>',
+  'panel-left-close': '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/>',
+  'panel-left-open': '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/>',
+  'sparkles': '<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>',
+  'banknote': '<rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/>',
+  'bed-double': '<path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/>',
+  'alert-triangle': '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  'clock': '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  'file-bar-chart': '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 14v3"/><path d="M12 12v5"/><path d="M16 15v2"/>'
+};
+function icon(name, size, width) {
+  var body = ICONS[name] || '';
+  return '<svg width="' + (size || 16) + '" height="' + (size || 16) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (width || 1.8) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
+}
+function sealImg(cls) {
+  return '<img src="' + (A.seal || '') + '" alt=""' + (cls ? ' class="' + cls + '"' : '') + '>';
+}
+
+/* ============================= translations ============================= */
+
+var T = {
+  km: {
+    appTitle: "របាយការណ៍ផ្នែកទទួលភ្ញៀវ",
+    appSubtitle: "ប្រព័ន្ធរបាយការណ៍ និងប្រតិបត្តិការផ្នែកទទួលភ្ញៀវ",
+    email: "អ៊ីមែល",
+    password: "ពាក្យសម្ងាត់",
+    shift: "វេន",
+    signIn: "ចូលប្រើ",
+    demoHint: "សាកល្បង: admin@hotel.com / admin123",
+    noAccount: "មិនទាន់មានគណនី? ចុះឈ្មោះ",
+    haveAccount: "មានគណនីរួចហើយ? ចូលប្រើ",
+    registerTitle: "ចុះឈ្មោះ",
+    registerSubtitle: "បង្កើតគណនី Staff (ត្រូវ Admin អនុម័ត)",
+    name: "ឈ្មោះ",
+    department: "ផ្នែក",
+    registerBtn: "ចុះឈ្មោះ",
+    navDashboard: "ផ្ទាំងគ្រប់គ្រង",
+    navReport: "របាយការណ៍ប្រចាំថ្ងៃ",
+    navShiftReports: "របាយការណ៍វេន",
+    navTasks: "ភារកិច្ច",
+    navFinancial: "ហិរញ្ញវត្ថុ",
+    navInquiries: "សំណួរអតិថិជន",
+    navCloseout: "បិទបញ្ជី FO",
+    navHandover: "ប្រគល់វេន",
+    navFeedback: "មតិភ្ញៀវ",
+    navMonthly: "របាយការណ៍ប្រចាំខែ",
+    navYearly: "របាយការណ៍ប្រចាំឆ្នាំ",
+    navHistory: "ប្រវត្តិរបាយការណ៍",
+    navAudit: "កំណត់ហេតុសវនកម្ម",
+    navShifts: "គ្រប់គ្រងវេន",
+    navAdmin: "អ្នកគ្រប់គ្រង",
+    status: "ស្ថានភាព",
+    morningShift: "វេនព្រឹក",
+    afternoonShift: "វេនរសៀល",
+    nightShift: "វេនយប់",
+    pageDashboard: "ផ្ទាំងគ្រប់គ្រង",
+    crumbOverview: "ទិដ្ឋភាពទូទៅ",
+    occupancy: "អត្រាកាន់កាប់",
+    todayIncome: "ចំណូលថ្ងៃនេះ",
+    openTasks: "ភារកិច្ចមិនទាន់រួច",
+    inquiriesToday: "សំណួរថ្ងៃនេះ",
+    occupancyTrend: "និន្នាការអត្រាកាន់កាប់ (៧ថ្ងៃ)",
+    alerts: "ការជូនដំណឹង",
+    recentReports: "របាយការណ៍ថ្មីៗ",
+    viewAll: "មើលទាំងអស់",
+    pageReport: "របាយការណ៍ប្រចាំថ្ងៃ",
+    pageShiftReports: "របាយការណ៍វេន",
+    pageTasks: "ភារកិច្ច",
+    pageFinancial: "ហិរញ្ញវត្ថុ",
+    pageInquiries: "សំណួរអតិថិជន",
+    pageCloseout: "បិទបញ្ជី និងប្រគល់វេន",
+    pageFeedback: "មតិភ្ញៀវ",
+    pageMonthly: "របាយការណ៍ប្រចាំខែ",
+    pageYearly: "របាយការណ៍ប្រចាំឆ្នាំ",
+    pageHistory: "ប្រវត្តិរបាយការណ៍",
+    pageAudit: "កំណត់ហេតុសវនកម្ម",
+    pageShifts: "គ្រប់គ្រងវេន",
+    pageAdmin: "ការកំណត់ប្រព័ន្ធ",
+    reportInfo: "ព័ត៌មានរបាយការណ៍",
+    date: "កាលបរិច្ឆេទ",
+    reporter: "អ្នករាយការណ៍",
+    totalRooms: "បន្ទប់សរុប",
+    occupied: "កាន់កាប់",
+    vacant: "ទំនេរ",
+    ooo: "មិនអាចប្រើ",
+    arrivals: "មកដល់",
+    departures: "ចាកចេញ",
+    vip: "VIP",
+    longStay: "ស្នាក់នៅយូរ",
+    walkIn: "មកដោយផ្ទាល់",
+    noShow: "មិនមក",
+    cancellations: "លុបចោល",
+    occupancyPct: "អត្រាកាន់កាប់ %",
+    notesIssues: "កំណត់ចំណាំ និងបញ្ហា",
+    shiftNotes: "កំណត់ចំណាំវេន",
+    issuesIncidents: "បញ្ហា / ឧប្បត្តិហេតុ",
+    saveDraft: "រក្សាទុកសេចក្តីព្រាង",
+    submitReport: "ដាក់ស្នើរបាយការណ៍",
+    selectDate: "ជ្រើសរើសកាលបរិច្ឆេទ",
+    dailyCombined: "របាយការណ៍ថ្ងៃ (៣ វេន)",
+    generateReport: "បង្កើតរបាយការណ៍",
+    printReport: "បោះពុម្ព",
+    newTask: "ភារកិច្ចថ្មី",
+    allStatus: "ស្ថានភាពទាំងអស់",
+    pending: "រង់ចាំ",
+    inProgress: "កំពុងធ្វើ",
+    completed: "បានបញ្ចប់",
+    allPriority: "អាទិភាពទាំងអស់",
+    high: "ខ្ពស់",
+    med: "មធ្យម",
+    low: "ទាប",
+    addIncome: "បន្ថែមចំណូល",
+    addExpense: "បន្ថែមចំណាយ",
+    addRefund: "បន្ថែមសងប្រាក់",
+    incomeTab: "ចំណូល",
+    expensesTab: "ចំណាយ",
+    refundsTab: "សងប្រាក់",
+    cashTab: "ភាពខុសគ្នាសាច់ប្រាក់",
+    deepCalc: "គណនាស៊ីជម្រៅ",
+    cashTracking: "តាមដានសាច់ប្រាក់",
+    incomeSources: "ប្រភពចំណូល",
+    expenses: "ចំណាយ",
+    refunds: "សងប្រាក់",
+    checkVariance: "ពិនិត្យភាពខុសគ្នា",
+    save: "រក្សាទុក",
+    logInquiry: "កត់ត្រាសំណួរ",
+    allCategories: "ប្រភេទទាំងអស់",
+    allOutcomes: "លទ្ធផលទាំងអស់",
+    customerFeedback: "មតិ និងបទពិសោធន៍ភ្ញៀវ",
+    addFeedback: "កត់ត្រាមតិ",
+    noFeedback: "មិនទាន់មានមតិភ្ញៀវដែលបានកត់ត្រាទេ។",
+    addShift: "បន្ថែមវេន",
+    refreshed: "ទិន្នន័យបានធ្វើបច្ចុប្បន្នភាព",
+    saved: "បានរក្សាទុកដោយជោគជ័យ",
+    submitted: "របាយការណ៍បានដាក់ស្នើ"
+  },
+  en: {
+    appTitle: "Front Desk Report",
+    appSubtitle: "Front office reporting & operations system",
+    email: "Email",
+    password: "Password",
+    shift: "Shift",
+    signIn: "Sign in",
+    demoHint: "Demo: admin@hotel.com / admin123",
+    noAccount: "Don't have an account? Register",
+    haveAccount: "Already have an account? Sign in",
+    registerTitle: "Register",
+    registerSubtitle: "Create a staff account (admin approval required)",
+    name: "Name",
+    department: "Department",
+    registerBtn: "Create account",
+    navDashboard: "Dashboard",
+    navReport: "Daily report",
+    navShiftReports: "Shift reports",
+    navTasks: "Tasks",
+    navFinancial: "Finance",
+    navInquiries: "Guest inquiries",
+    navCloseout: "FO closeout",
+    navHandover: "Handover",
+    navFeedback: "Guest feedback",
+    navMonthly: "Monthly report",
+    navYearly: "Yearly report",
+    navHistory: "Report history",
+    navAudit: "Audit log",
+    navShifts: "Shift management",
+    navAdmin: "Administration",
+    status: "Status",
+    morningShift: "Morning shift",
+    afternoonShift: "Afternoon shift",
+    nightShift: "Night shift",
+    pageDashboard: "Dashboard",
+    crumbOverview: "Overview",
+    occupancy: "Occupancy",
+    todayIncome: "Today’s income",
+    openTasks: "Open tasks",
+    inquiriesToday: "Inquiries today",
+    occupancyTrend: "Occupancy trend (7 days)",
+    alerts: "Alerts",
+    recentReports: "Recent reports",
+    viewAll: "View all",
+    pageReport: "Daily report",
+    pageShiftReports: "Shift reports",
+    pageTasks: "Tasks",
+    pageFinancial: "Finance",
+    pageInquiries: "Guest inquiries",
+    pageCloseout: "Closeout & handover",
+    pageFeedback: "Guest feedback",
+    pageMonthly: "Monthly report",
+    pageYearly: "Yearly report",
+    pageHistory: "Report history",
+    pageAudit: "Audit log",
+    pageShifts: "Shift management",
+    pageAdmin: "System settings",
+    reportInfo: "Report information",
+    date: "Date",
+    reporter: "Reporter",
+    totalRooms: "Total rooms",
+    occupied: "Occupied",
+    vacant: "Vacant",
+    ooo: "Out of order",
+    arrivals: "Arrivals",
+    departures: "Departures",
+    vip: "VIP",
+    longStay: "Long stay",
+    walkIn: "Walk-ins",
+    noShow: "No-shows",
+    cancellations: "Cancellations",
+    occupancyPct: "Occupancy %",
+    notesIssues: "Notes & issues",
+    shiftNotes: "Shift notes",
+    issuesIncidents: "Issues / incidents",
+    saveDraft: "Save draft",
+    submitReport: "Submit report",
+    selectDate: "Select date",
+    dailyCombined: "Daily combined (3 shifts)",
+    generateReport: "Generate report",
+    printReport: "Print",
+    newTask: "New task",
+    allStatus: "All statuses",
+    pending: "Pending",
+    inProgress: "In progress",
+    completed: "Completed",
+    allPriority: "All priorities",
+    high: "High",
+    med: "Medium",
+    low: "Low",
+    addIncome: "Add income",
+    addExpense: "Add expense",
+    addRefund: "Add refund",
+    incomeTab: "Income",
+    expensesTab: "Expenses",
+    refundsTab: "Refunds",
+    cashTab: "Cash variance",
+    deepCalc: "Deep calculation",
+    cashTracking: "Cash tracking",
+    incomeSources: "Income sources",
+    expenses: "Expenses",
+    refunds: "Refunds",
+    checkVariance: "Check variance",
+    save: "Save",
+    logInquiry: "Log inquiry",
+    allCategories: "All categories",
+    allOutcomes: "All outcomes",
+    customerFeedback: "Guest feedback & experience",
+    addFeedback: "Log feedback",
+    noFeedback: "No guest feedback has been logged yet.",
+    addShift: "Add shift",
+    refreshed: "Data refreshed",
+    saved: "Saved successfully",
+    submitted: "Report submitted"
+  }
+};
+
+var NAV = [
+  { key: 'dashboard', icon: 'layout-dashboard', label: 'navDashboard' },
+  { key: 'report', icon: 'file-text', label: 'navReport' },
+  { key: 'shiftreports', icon: 'activity', label: 'navShiftReports' },
+  { key: 'tasks', icon: 'clipboard-list', label: 'navTasks' },
+  { key: 'financial', icon: 'wallet', label: 'navFinancial' },
+  { key: 'inquiries', icon: 'message-circle', label: 'navInquiries' },
+  { key: 'closeout', icon: 'clipboard-check', label: 'navCloseout' },
+  { key: 'feedback', icon: 'star', label: 'navFeedback' },
+  { key: 'monthly', icon: 'calendar-days', label: 'navMonthly' },
+  { key: 'yearly', icon: 'bar-chart-3', label: 'navYearly' },
+  { key: 'history', icon: 'history', label: 'navHistory' },
+  { key: 'audit', icon: 'shield-check', label: 'navAudit' },
+  { key: 'shifts', icon: 'users', label: 'navShifts' },
+  { key: 'admin', icon: 'settings', label: 'navAdmin' }
+];
+var TITLES = {
+  dashboard: 'pageDashboard', report: 'pageReport', shiftreports: 'pageShiftReports', tasks: 'pageTasks',
+  financial: 'pageFinancial', inquiries: 'pageInquiries', closeout: 'pageCloseout', feedback: 'pageFeedback',
+  monthly: 'pageMonthly', yearly: 'pageYearly', history: 'pageHistory', audit: 'pageAudit',
+  shifts: 'pageShifts', admin: 'pageAdmin'
+};
+
+/* ============================= state ============================= */
+
+var S = {
+  lang: 'km',
+  view: 'dashboard',
+  user: null,
+  token: '',
+  shift: 'Morning',
+  boot: true,
+  registering: false,
+  busy: false,
+  refreshing: false,
+  data: { tasks: [], reports: [], inquiries: [], feedback: [], finance: [], audit: [], users: [], pendingUsers: [] },
+  ui: {
+    sidebarCollapsed: false,
+    mobileNavOpen: false,
+    notifOpen: false,
+    notifCount: 3,
+    selectedDay: 6,
+    report: { dateIso: todayIso(), shift: 'Morning', total: 100, occupied: 85, notes: '', issues: '' },
+    taskModal: null,   // { title, priority, due }
+    inquiryModal: null, // { channel, category, guestName, details, outcome, followUp }
+    financeModal: null, // { type, dateIso, shift, category, description, amount }
+    tasks: { status: '', priority: '' },
+    fin: { tab: 'income', expected: 1000, actual: 950, opening: 200, sales: 780, refunds: 30 },
+    inq: { category: '', outcome: '' },
+    close: { saved: false, morningClose: 950 },
+    fb: { dateIso: todayIso(), channel: 'Front desk', guestName: '', room: '', comment: '', saved: false },
+    shifts: { date: todayIso(), generated: false },
+    monthly: { month: todayIso().slice(0, 7) },
+    history: { query: '' },
+    admin: { section: 'users' }
+  }
+};
+function t() { return T[S.lang]; }
+function km(text) { return S.lang === 'km' ? text : null; } // helper unused placeholder
+function L(kmText, enText) { return S.lang === 'km' ? kmText : enText; }
+
+/* ============================= google.script.run bridge ============================= */
+
+function api(name, arg) {
+  return new Promise(function (resolve, reject) {
+    try {
+      google.script.run
+        .withSuccessHandler(function (r) { resolve(r); })
+        .withFailureHandler(function (err) {
+          var msg = err && err.message ? String(err.message) : String(err);
+          reject(new Error(msg));
+        })[name](arg);
+    } catch (e) { reject(e); }
+  });
+}
+
+function toast(type, message) {
+  var region = document.querySelector('.toast-region');
+  if (!region) {
+    region = document.createElement('div');
+    region.className = 'toast-region';
+    document.body.appendChild(region);
+  }
+  var el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = icon(type === 'success' ? 'check-circle' : type === 'error' ? 'alert-triangle' : 'bell', 15, 2) + '<span>' + esc(message) + '</span>';
+  region.appendChild(el);
+  window.setTimeout(function () {
+    el.style.transition = 'opacity .3s ease, transform .3s ease';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(-4px)';
+    window.setTimeout(function () { el.remove(); }, 320);
+  }, 3200);
+}
+function toastSuccess(m) { toast('success', m); }
+function toastError(m) { toast('error', m); }
+function toastInfo(m) { toast('info', m); }
+
+function errText(e) {
+  var m = String(e && e.message ? e.message : e);
+  if (m.indexOf('FDR:invalid') !== -1) return L('អ៊ីមែល ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ', 'That email or password doesn\'t match our records');
+  if (m.indexOf('FDR:pending') !== -1) return L('គណនីរង់ចាំការអនុម័តពី Admin', 'This account is waiting for admin approval');
+  if (m.indexOf('FDR:rejected') !== -1) return L('គណនីនេះមិនត្រូវបានអនុម័ត', 'This account was not approved');
+  if (m.indexOf('FDR:unauthorized') !== -1) return L('សំណាកប្រើប្រាស់បានផុតកំណត់ — សូមចូលម្តងទៀត', 'Your session expired — please sign in again');
+  return m;
+}
+
+/* ============================= data actions ============================= */
+
+function loadState() {
+  return api('getState', { token: S.token }).then(function (state) {
+    S.data = state;
+  });
+}
+
+function mutate(fn) {
+  S.busy = true;
+  render();
+  return fn().then(function (r) {
+    S.busy = false;
+    return loadState().then(function () { S.busy = false; render(); return r; });
+  }).catch(function (e) {
+    S.busy = false;
+    render();
+    throw e;
+  });
+}
+
+function doLogin(email, password) {
+  return api('login', { email: email, password: password }).then(function (r) {
+    S.token = r.token;
+    S.user = r.user;
+    try { localStorage.setItem('fdr_token', r.token); } catch (e) {}
+    S.view = 'dashboard';
+    return loadState().then(function () {
+      S.busy = false;
+      S.boot = false;
+      render();
+      toastSuccess(L('សូមស្វាគមន៍មកកាន់ FDR', 'Welcome to FDR'));
+    });
+  }).catch(function (e) {
+    toastError(errText(e));
+    throw e;
+  });
+}
+
+function doRegister(payload) {
+  return api('register', payload).then(function () {
+    S.busy = false;
+    S.registering = false;
+    render();
+    toastSuccess(L('សំណើចុះឈ្មោះបានផ្ញើទៅ Admin', 'Registration request sent to admin'));
+  }).catch(function (e) {
+    S.busy = false;
+    S.registering = false;
+    render();
+    toastError(errText(e));
+  });
+}
+
+function doLogout() {
+  var token = S.token;
+  api('logout', { token: token })['catch'](function () {});
+  S.token = '';
+  S.user = null;
+  S.data = { tasks: [], reports: [], inquiries: [], feedback: [], finance: [], audit: [], users: [], pendingUsers: [] };
+  try { localStorage.removeItem('fdr_token'); } catch (e) {}
+  S.boot = false;
+  render();
+}
+
+function doRefresh() {
+  S.refreshing = true;
+  render();
+  loadState().then(function () {
+    S.refreshing = false;
+    render();
+    toastSuccess(t().refreshed);
+  }).catch(function () {
+    S.refreshing = false;
+    render();
+    toastError(L('មិនអាចធ្វើបច្ចុប្បន្នភាពបាន', 'Refresh failed'));
+  });
+}
+
+/* ============================= CSV + print ============================= */
+
+function csvCell(value) {
+  return '"' + String(value === null || value === undefined ? '' : value).split('\\').join('\\\\').split('"').join('""') + '"';
+}
+function downloadCsv(filename, headers, rows) {
+  var csv = [headers].concat(rows).map(function (row) {
+    return row.map(csvCell).join(',');
+  }).join('\r\n');
+  var blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.target = '_top';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+}
+function printSheet(target, title) {
+  var className = 'printing-' + target;
+  var previousTitle = document.title;
+  document.title = title;
+  document.body.classList.add(className);
+  var cleanup = function () {
+    document.body.classList.remove(className);
+    document.title = previousTitle;
+  };
+  window.addEventListener('afterprint', cleanup, { once: true });
+  window.setTimeout(function () { window.print(); }, 40);
+}
+
+/* ============================= boot ============================= */
+
+function boot() {
+  if (A.seal) {
+    var img = document.getElementById('boot-seal');
+    if (img) img.src = A.seal;
+  }
+  S.token = '';
+  try { S.token = localStorage.getItem('fdr_token') || ''; } catch (e) {}
+  if (S.token) {
+    api('me', { token: S.token }).then(function (user) {
+      if (user) {
+        S.user = user;
+        return loadState();
+      }
+    }).catch(function () {}).then(function () {
+      S.boot = false;
+      render();
+    });
+  } else {
+    S.boot = false;
+    render();
+  }
+}
+
+/* ============================= view helpers ============================= */
+
+function field(label, inner, withIcon) {
+  return '<label class="field"><span>' + (withIcon ? withIcon : '') + esc(label) + '</span>' + inner + '</label>';
+}
+function pill(status) {
+  var cls = String(status).toLowerCase();
+  return '<span class="status-pill ' + cls + '">' + esc(status) + '</span>';
+}
+function sectionHeader(eyebrow, title, description, actionsHtml) {
+  return '<div class="section-header"><div><div class="eyebrow">' + esc(eyebrow) + '</div><h2>' + esc(title) + '</h2>' +
+    (description ? '<p>' + esc(description) + '</p>' : '') + '</div>' + (actionsHtml || '') + '</div>';
+}
+function panelHeading(iconName, title, actionHtml) {
+  return '<div class="panel-heading"><div><span class="heading-icon">' + icon(iconName, 16) + '</span><h3>' + esc(title) + '</h3></div>' + (actionHtml || '') + '</div>';
+}
+function emptyState(iconName, title, detail) {
+  return '<div class="empty-state"><span>' + icon(iconName, 24) + '</span><h3>' + esc(title) + '</h3><p>' + esc(detail) + '</p></div>';
+}
+function dataTable(headers, rows) {
+  var thead = headers.map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('');
+  var tbody = rows.map(function (row) {
+    return '<tr>' + row.map(function (cell) {
+      return '<td>' + (typeof cell === 'string' ? esc(cell) : cell) + '</td>';
+    }).join('') + '</tr>';
+  }).join('');
+  return '<div class="data-table-wrap"><table class="data-table"><thead><tr>' + thead + '</tr></thead><tbody>' + (tbody || '<tr><td colspan="' + headers.length + '" style="color:var(--muted)">' + esc(L('មិនមានទិន្នន័យ', 'No records')) + '</td></tr>') + '</tbody></table></div>';
+}
+
+/* ============================= views ============================= */
+
+function viewDashboard() {
+  var d = S.data, tt = t();
+  var openTasks = d.tasks.filter(function (task) { return task.status !== 'Completed'; }).length;
+  var latest = null;
+  for (var i = 0; i < d.reports.length; i++) {
+    if (d.reports[i].status !== 'Draft') { latest = d.reports[i]; break; }
+  }
+  var firstName = (S.user.name || 'John').split(' ')[0];
+  var submittedToday = d.reports.some(function (report) {
+    return report.dateIso === todayIso() && report.status === 'Submitted';
+  });
+  var days = S.lang === 'km' ? ['ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហ', 'សុក្រ', 'សៅរ៍', 'អាទិត្យ'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  var values = [72, 78, 81, 75, 88, 92, 85];
+  var sel = S.ui.selectedDay;
+
+  var bars = values.map(function (value, index) {
+    return '<button class="' + cn('bar-column', sel === index && 'bar-column-selected') + '" style="--bar-height:' + value + '%" data-action="select-day" data-day="' + index + '">' +
+      '<span class="bar-value">' + value + '%</span><i></i><span class="bar-label">' + days[index] + '</span></button>';
+  }).join('');
+
+  var focus = d.tasks.filter(function (task) { return task.status !== 'Completed'; }).slice(0, 3).map(function (task) {
+    return '<div class="focus-row" key="' + esc(task.id) + '"><span class="' + cn('priority-marker', String(task.priority).toLowerCase()) + '"></span>' +
+      '<div><strong>' + esc(task.title) + '</strong><span>' + esc(task.detail) + '</span></div><small>' + esc(task.due) + '</small></div>';
+  }).join('');
+
+  var recent = d.reports.slice(0, 4).map(function (report) {
+    return [
+      report.id,
+      formatDate(new Date(report.dateIso + 'T00:00:00'), S.lang),
+      report.shift,
+      report.reporter,
+      report.occupancy,
+      report.income,
+      pill(report.status)
+    ];
+  });
+
+  return '<div class="dashboard-view">' +
+    '<section class="dashboard-intro"><div>' +
+      '<div class="eyebrow brass-eyebrow"><span class="pulse-dot"></span>' + L('ស្ថានភាពប្រតិបត្តិការ · LIVE', 'OPERATIONS STATUS · LIVE') + '</div>' +
+      '<h2>' + L('អរុណសួស្តី, ', 'Good morning, ') + esc(firstName) + '</h2>' +
+      '<p>' + L('នេះជារូបភាពសង្ខេបនៃថ្ងៃនេះ។ ពិនិត្យចំណុចពិសេសមុនពេលប្រគល់វេនបន្ទាប់។', 'Here is today’s operating picture. Review the exceptions before the next handoff.') + '</p>' +
+    '</div><div class="intro-date"><span>' + L('កាលបរិច្ឆេទប្រតិបត្តិការ', 'OPERATING DATE') + '</span>' +
+      '<strong>' + formatDate(new Date(), S.lang) + '</strong>' +
+      '<small>07:00 — 14:00 · ' + esc(tt.morningShift) + '</small></div></section>' +
+
+    '<section class="stats-grid">' +
+      statCard('bed-double', tt.occupancy, latest ? latest.occupancy : '85%', latest ? L('ពី ', 'From ') + latest.id : L('85 / 100 បន្ទប់', '85 / 100 rooms'), 'blue', '+4.2%') +
+      statCard('banknote', tt.todayIncome, latest ? latest.income : '$5,200', latest ? L('ពី ', 'From ') + latest.id : L('ប្រៀបធៀបថ្ងៃម្សិលមិញ', 'vs yesterday'), 'green', '+12%') +
+      statCard('clipboard-list', tt.openTasks, String(openTasks), L('3 អាទិភាពខ្ពស់', '3 high priority'), 'amber', '-2') +
+      statCard('message-circle', tt.inquiriesToday, '12', L('9 បានដោះស្រាយ', '9 resolved'), 'purple', '+3') +
+    '</section>' +
+
+    '<section class="content-grid dashboard-grid">' +
+      '<div class="panel chart-panel">' +
+        panelHeading('activity', tt.occupancyTrend, '<span class="panel-meta">' + (latest ? latest.occupancy : '85%') + ' ' + icon('arrow-up-right', 13) + '</span>') +
+        '<div class="chart-wrap"><div class="chart-y-labels"><span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0%</span></div>' +
+          '<div class="bar-chart">' + bars + '</div></div>' +
+        '<div class="chart-footnote"><span><i class="legend-swatch"></i>' + L('អត្រាកាន់កាប់ជាក់ស្តែង', 'Actual occupancy') + '</span>' +
+          '<span>' + L('ជ្រើសរើស៖ ', 'Selected: ') + days[sel] + '</span></div>' +
+      '</div>' +
+
+      '<div class="panel alerts-panel">' +
+        panelHeading('alert-triangle', tt.alerts, '<button class="text-button" data-action="nav" data-view="financial">' + esc(tt.viewAll) + '</button>') +
+        '<div class="alert-list">' +
+          alertItem('warning', 'banknote', L('ភាពខុសគ្នានៃសាច់ប្រាក់', 'Cash variance'), L('រំពឹង $1,000 · ជាក់ស្តែង $950 (−$50)', 'Expected $1,000 · Actual $950 (−$50)')) +
+          alertItem(submittedToday ? 'success' : 'info', submittedToday ? 'check-circle' : 'clock', submittedToday ? L('របាយការណ៍ថ្ងៃនេះបានដាក់', "Today's report is filed") : L('របាយការណ៍ត្រូវដាក់', 'Report due'), submittedToday ? L('អរគុណ — វេននេះត្រូវបានកត់ត្រារួចរាល់។', 'Thanks — this shift is on the record.') : L('របាយការណ៍វេនត្រូវដាក់មុនពេលប្រគល់វេន', 'File the shift report before the next handoff')) +
+          alertItem('success', 'check-circle', L('បន្ទប់ទាំងអស់បានពិនិត្យ', 'All rooms inspected'), L('ការសម្អាតបានបញ្ចប់ម៉ោង ០៨:៤៥', 'Housekeeping completed at 08:45')) +
+        '</div>' +
+      '</div>' +
+
+      '<div class="panel image-panel"><img src="' + (A['reception-detail'] || '') + '" alt="Quiet hotel reception counter">' +
+        '<div class="image-panel-overlay"><span class="eyebrow">FDR / FIELD NOTE</span>' +
+          '<strong>' + L('កន្លែងទទួលភ្ញៀវមានសណ្តាប់ធ្នាប់', 'A front desk in order') + '</strong>' +
+          '<p>' + L('បរិយាកាសស្ងប់ស្ងាត់សម្រាប់ការបម្រើភ្ញៀវដែលយកចិត្តទុកដាក់។', 'A calm environment for attentive guest service.') + '</p></div>' +
+      '</div>' +
+
+      '<div class="panel tasks-summary">' +
+        panelHeading('clipboard-list', L('ភារកិច្ចដែលត្រូវផ្តោត', 'Focus tasks'), '<button class="text-button" data-action="nav" data-view="tasks">' + esc(tt.viewAll) + '</button>') +
+        '<div class="focus-list">' + (focus || '<p style="color:var(--muted);font-size:11px;padding:8px 0">' + esc(L('គ្មានភារកិច្ចដែលរង់ចាំទេ', 'No open tasks')) + '</p>') + '</div>' +
+      '</div>' +
+
+      '<div class="panel full-width recent-panel">' +
+        panelHeading('file-bar-chart', tt.recentReports, '<button class="text-button" data-action="nav" data-view="history">' + esc(tt.viewAll) + '</button>') +
+        dataTable([L('លេខរបាយការណ៍', 'Report ID'), tt.date, tt.shift, tt.reporter, tt.occupancy, L('ចំណូល', 'Income'), L('ស្ថានភាព', 'Status')], recent) +
+      '</div>' +
+    '</section></div>';
+}
+
+function statCard(iconName, label, value, sub, tone, trend) {
+  var down = trend.indexOf('-') === 0;
+  return '<div class="stat-card"><div class="' + cn('stat-icon', tone) + '">' + icon(iconName, 19) + '</div>' +
+    '<div class="stat-body"><span class="stat-label">' + esc(label) + '</span><strong>' + esc(value) + '</strong><span class="stat-sub">' + esc(sub) + '</span></div>' +
+    '<span class="' + cn('trend', down && 'trend-down') + '">' + icon(down ? 'arrow-down-right' : 'arrow-up-right', 13) + esc(trend) + '</span></div>';
+}
+function alertItem(tone, iconName, title, detail) {
+  return '<div class="' + cn('alert-item', tone) + '"><span class="alert-icon">' + icon(iconName, 17) + '</span><div><strong>' + esc(title) + '</strong><span>' + esc(detail) + '</span></div></div>';
+}
+
+function viewReport() {
+  var u = S.ui.report, tt = t();
+  var pct = u.total ? Math.min(100, Math.round((u.occupied / u.total) * 100)) : 0;
+  var shiftOptions = ['Morning', 'Afternoon', 'Night'].map(function (s) { return '<option value="' + s + '"' + (u.shift === s ? ' selected' : '') + '>' + s + '</option>'; }).join('');
+  return '<div class="section-stack">' +
+    '<div class="section-intro"><div><div class="eyebrow">FDR / ' + L('ការបញ្ចូលទិន្នន័យ', 'DATA ENTRY') + '</div>' +
+      '<h2>' + esc(tt.pageReport) + '</h2>' +
+      '<p>' + L('បំពេញសេចក្តីរាយការណ៍តាមលំដាប់ ដើម្បីរក្សាការប្រគល់វេនឱ្យមានភាពច្បាស់លាស់។', 'Complete the report in sequence to keep the next handoff clear.') + '</p></div>' +
+      '<div class="section-aside-note">' + icon('sparkles', 16) + '<span>' + L('កំពុងកែសម្រួលសេចក្តីព្រាង', 'Editing today’s draft') + '</span></div></div>' +
+
+    '<form class="form-sheet" id="report-form">' +
+      '<div class="form-section"><div class="form-section-heading"><span>' + icon('file-text', 17) + '</span><h3>' + esc(tt.reportInfo) + '</h3></div>' +
+        '<div class="form-grid four">' +
+          field(tt.date, '<input type="date" data-bind="report.dateIso" value="' + esc(u.dateIso) + '" required>') +
+          field(tt.shift, '<select data-bind="report.shift">' + shiftOptions + '</select>') +
+          field(tt.department, '<select><option>Front office</option><option>Housekeeping</option><option>Maintenance</option><option>Food & beverage</option></select>') +
+          field(tt.reporter, '<input value="' + esc(S.user.name) + '" readonly>') +
+        '</div></div>' +
+
+      '<div class="form-section"><div class="form-section-heading"><span>' + icon('bed-double', 17) + '</span><h3>' + esc(tt.occupancy) + '</h3></div>' +
+        '<div class="form-grid four">' +
+          field(tt.totalRooms, '<input type="number" min="0" data-bind="report.total" data-live="report" value="' + esc(u.total) + '">') +
+          field(tt.occupied, '<input type="number" min="0" data-bind="report.occupied" data-live="report" value="' + esc(u.occupied) + '">') +
+          field(tt.vacant, '<input type="number" min="0" value="15">') +
+          field(tt.ooo, '<input type="number" min="0" value="0">') +
+        '</div>' +
+        '<div class="form-grid four">' +
+          field(tt.arrivals, '<input type="number" min="0" value="24">') +
+          field(tt.departures, '<input type="number" min="0" value="18">') +
+          field(tt.vip, '<input type="number" min="0" value="4">') +
+          field(tt.occupancyPct, '<div class="readonly-value"><strong id="report-pct">' + pct + '%</strong><span>' + L('គណនាដោយស្វ័យប្រវត្តិ', 'Calculated automatically') + '</span></div>') +
+        '</div>' +
+        '<div class="occupancy-progress" id="report-progress"><span id="report-progress-bar" style="width:' + pct + '%"></span></div>' +
+      '</div>' +
+
+      '<div class="form-section"><div class="form-section-heading"><span>' + icon('file-text', 17) + '</span><h3>' + esc(tt.notesIssues) + '</h3></div>' +
+        '<div class="form-grid two">' +
+          field(tt.shiftNotes, '<textarea rows="4" data-bind="report.notes" placeholder="' + L('សរសេរកំណត់ចំណាំសម្រាប់វេនបន្ទាប់...', 'Write notes for the next shift...') + '">' + esc(u.notes) + '</textarea>') +
+          field(tt.issuesIncidents, '<textarea rows="4" data-bind="report.issues" placeholder="' + L('រាយការណ៍បញ្ហាដែលត្រូវតាមដាន...', 'Log anything that needs follow-up...') + '">' + esc(u.issues) + '</textarea>') +
+        '</div></div>' +
+
+      '<div class="form-actions">' +
+        '<button type="button" class="secondary-button" data-action="report-draft" ' + (S.busy ? 'disabled' : '') + '>' + icon('save', 16) + esc(tt.saveDraft) + '</button>' +
+        '<button type="submit" class="primary-button" ' + (S.busy ? 'disabled' : '') + '>' + icon('send', 16) + esc(tt.submitReport) + '<span class="btn-arrow">' + icon('arrow-up-right', 15) + '</span></button>' +
+      '</div>' +
+    '</form></div>';
+}
+
+function collectReport() {
+  var u = S.ui.report;
+  var notes = [u.notes.trim(), u.issues.trim() ? 'Issues: ' + u.issues.trim() : ''].filter(Boolean).join(' · ');
+  return { dateIso: u.dateIso, shift: u.shift, totalRooms: Number(u.total) || 0, occupied: Number(u.occupied) || 0, notes: notes };
+}
+
+function viewShiftReports() {
+  var tt = t();
+  var u = S.ui.shifts;
+  var dayReports = S.data.reports.filter(function (report) { return report.dateIso === u.date && report.status !== 'Draft'; });
+  var hasData = dayReports.length > 0;
+  var shiftDefs = [
+    { name: 'Morning', icon: 'sunrise', time: '07:00 – 15:00' },
+    { name: 'Afternoon', icon: 'sun', time: '15:00 – 23:00' },
+    { name: 'Night', icon: 'moon', time: '23:00 – 07:00' }
+  ];
+  var body;
+  if (!u.generated) {
+    body = emptyState('file-bar-chart', L('ជ្រើសរើសកាលបរិច្ឆេទដើម្បីបង្កើតសន្លឹកវេន', 'Choose a date to generate the shift sheet'), L('សន្លឹកនេះភ្ជាប់របាយការណ៍វេនពិតៗពីវេនព្រឹក រសៀល និងយប់។', 'The sheet joins the real submitted reports from morning, afternoon, and night.'));
+  } else if (!hasData) {
+    body = emptyState('file-bar-chart', L('មិនមានរបាយការណ៍ដែលបានដាក់សម្រាប់ថ្ងៃនេះ', 'No submitted reports for this date'), L('សូមដាក់របាយការណ៍វេនពីទំព័ររបាយការណ៍ប្រចាំថ្ងៃជាមុនសិន។', 'File shift reports from the daily report page first.'));
+  } else {
+    var cards = shiftDefs.map(function (def) {
+      var report = dayReports.filter(function (item) { return item.shift === def.name; })[0];
+      return '<div class="shift-card"><div class="shift-card-top"><span class="' + cn('shift-icon', def.icon) + '">' + icon(def.icon, 17) + '</span>' +
+        '<div><strong>' + def.name + ' shift</strong><span>' + def.time + '</span></div></div>' +
+        '<dl><div><dt>Occupancy</dt><dd>' + (report ? esc(report.occupancy) : '—') + '</dd></div>' +
+        '<div><dt>Reported income</dt><dd>' + (report ? esc(report.income) : '—') + '</dd></div>' +
+        '<div><dt>Handover</dt><dd class="' + (report ? 'success-text' : '') + '">' + (report ? L('រួចរាល់', 'Ready') : L('មិនទាន់ដាក់', 'Not filed')) + '</dd></div></dl>' +
+        (report && report.notes ? '<p class="shift-note">' + esc(report.notes) + '</p>' : '') + '</div>';
+    }).join('');
+    body = '<div class="shift-report-output"><div class="report-summary-banner"><div><span class="eyebrow">DAILY CLOSE · ' + esc(u.date) + '</span>' +
+      '<h3>' + L('សេចក្តីសង្ខេបប្រតិបត្តិការប្រចាំថ្ងៃ', 'Daily operating summary') + '</h3></div>' +
+      '<span class="status-pill approved">' + icon('check-circle', 13) + L('បានបង្កើត', 'Generated') + '</span></div>' +
+      '<div class="shift-report-grid">' + cards + '</div></div>';
+  }
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / SHIFT RHYTHM', tt.pageShiftReports, L('មើលរបាយការណ៍វេនពិតៗសម្រាប់ថ្ងៃណាមួយ ភ្ជាប់ជាសន្លឹកតែមួយ។', 'Review the live submitted reports for a date, joined into one operating sheet.'),
+      '<div class="toolbar-actions"><input class="compact-input" type="date" data-bind="shifts.date" data-change="shifts-date" value="' + esc(u.date) + '">' +
+      '<button class="primary-button" data-action="shift-gen">' + icon('refresh-cw', 15) + esc(tt.generateReport) + '</button>' +
+      '<button class="secondary-button" data-action="shift-csv" ' + (!hasData ? 'disabled' : '') + '>' + icon('download', 15) + 'CSV</button>' +
+      '<button class="secondary-button" data-action="handover-print" ' + (!hasData ? 'disabled' : '') + '>' + icon('printer', 15) + 'PDF</button></div>') +
+    body + '</div>';
+}
+
+function exportShiftCsv() {
+  var u = S.ui.shifts;
+  var dayReports = S.data.reports.filter(function (report) { return report.dateIso === u.date && report.status !== 'Draft'; });
+  var times = ['07:00 – 15:00', '15:00 – 23:00', '23:00 – 07:00'];
+  downloadCsv('fdr-shift-handover-' + u.date + '.csv',
+    ['Date', 'Shift', 'Hours', 'Occupancy', 'Reported income', 'Handover status'],
+    ['Morning', 'Afternoon', 'Night'].map(function (name, i) {
+      var report = dayReports.filter(function (item) { return item.shift === name; })[0];
+      return [u.date, name, times[i], report ? report.occupancy : '—', report ? report.income : '—', report ? 'Ready' : 'Not filed'];
+    }));
+  toastSuccess(L('ឯកសារ CSV បានទាញយក', 'Handover CSV downloaded'));
+}
+
+function viewTasks() {
+  var tt = t();
+  var f = S.ui.tasks;
+  var filtered = S.data.tasks.filter(function (task) {
+    return (!f.status || task.status === f.status) && (!f.priority || task.priority === f.priority);
+  });
+  var columns = [
+    { status: 'Pending', marker: 'amber', label: tt.pending },
+    { status: 'In Progress', marker: 'blue', label: tt.inProgress },
+    { status: 'Completed', marker: 'green', label: tt.completed }
+  ];
+  var board = columns.map(function (col) {
+    var cards = filtered.filter(function (task) { return task.status === col.status; }).map(function (task) {
+      var next = task.status === 'Pending' ? 'In Progress' : task.status === 'In Progress' ? 'Completed' : 'Pending';
+      return '<article class="task-card"><div class="task-card-top">' +
+        '<span class="' + cn('priority-chip', String(task.priority).toLowerCase()) + '">' + esc(task.priority) + '</span>' +
+        '<button class="icon-button tiny" aria-label="More options">' + icon('more-horizontal', 15) + '</button></div>' +
+        '<strong>' + esc(task.title) + '</strong><p>' + esc(task.detail) + '</p>' +
+        '<div class="task-card-footer"><span>' + icon('clock', 13) + esc(task.due) + '</span>' +
+        '<button class="task-status-action" data-action="task-status" data-id="' + esc(task.id) + '" data-status="' + esc(next) + '">' +
+        (task.status === 'Completed' ? icon('check', 13) : icon('arrow-up-right', 13)) + (S.lang === 'km' ? 'ផ្លាស់ទី' : esc(next)) + '</button></div></article>';
+    }).join('');
+    return '<div class="kanban-column"><div class="kanban-heading"><div><span class="' + cn('kanban-marker', col.marker) + '"></span>' +
+      '<h3>' + esc(col.label) + '</h3></div><span class="count-badge">' + filtered.filter(function (task) { return task.status === col.status; }).length + '</span></div>' +
+      '<div class="kanban-cards">' + cards + '</div></div>';
+  }).join('');
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / WORK QUEUE', tt.pageTasks, L('ភារកិច្ចជាក់ស្តែងសម្រាប់វេននេះ — ច្បាស់លាស់ អាចតាមដានបាន និងមានម្ចាស់។', 'The live queue for this shift — clear, accountable, and easy to move forward.'),
+      '<button class="primary-button" data-action="open-task-modal">' + icon('plus', 16) + esc(tt.newTask) + '</button>') +
+    '<div class="toolbar-strip"><div class="toolbar-group">' +
+      '<select data-bind="tasks.status" data-change="tasks"><option value="">' + esc(tt.allStatus) + '</option><option value="Pending"' + (f.status === 'Pending' ? ' selected' : '') + '>' + esc(tt.pending) + '</option><option value="In Progress"' + (f.status === 'In Progress' ? ' selected' : '') + '>' + esc(tt.inProgress) + '</option><option value="Completed"' + (f.status === 'Completed' ? ' selected' : '') + '>' + esc(tt.completed) + '</option></select>' +
+      '<select data-bind="tasks.priority" data-change="tasks"><option value="">' + esc(tt.allPriority) + '</option><option value="High"' + (f.priority === 'High' ? ' selected' : '') + '>' + esc(tt.high) + '</option><option value="Med"' + (f.priority === 'Med' ? ' selected' : '') + '>' + esc(tt.med) + '</option><option value="Low"' + (f.priority === 'Low' ? ' selected' : '') + '>' + esc(tt.low) + '</option></select>' +
+    '</div><span class="toolbar-note"><span class="pulse-dot"></span>' + filtered.length + ' ' + L('ភារកិច្ចបង្ហាញ', 'tasks showing') + '</span></div>' +
+    '<div class="kanban-board">' + board + '</div></div>';
+}
+
+function viewFinancial() {
+  var tt = t();
+  var fin = S.ui.fin;
+  var entries = S.data.finance;
+  var income = entries.filter(function (e) { return e.type === 'income'; });
+  var expenses = entries.filter(function (e) { return e.type === 'expense'; });
+  var refunds = entries.filter(function (e) { return e.type === 'refund'; });
+  var tabs = [
+    { key: 'income', label: tt.incomeTab }, { key: 'expenses', label: tt.expensesTab }, { key: 'refunds', label: tt.refundsTab },
+    { key: 'cash', label: tt.cashTab }, { key: 'deep', label: tt.deepCalc }, { key: 'tracking', label: tt.cashTracking }
+  ];
+  var tabStrip = tabs.map(function (item) {
+    return '<button class="' + (fin.tab === item.key ? 'tab-active' : '') + '" data-action="fin-tab" data-tab="' + item.key + '">' + esc(item.label) + '</button>';
+  }).join('');
+
+  var body;
+  if (fin.tab === 'income' || fin.tab === 'expenses' || fin.tab === 'refunds') {
+    var rows = (fin.tab === 'income' ? income : fin.tab === 'expenses' ? expenses : refunds).map(function (entry) {
+      return [entry.id, entry.dateIso, entry.shift, entry.category || '—', formatMoney(entry.amount), entry.description || '—',
+        '<span class="status-pill approved">' + (fin.tab === 'income' ? 'Settled' : 'Approved') + '</span>'];
+    });
+    var headers = ['ID', tt.date, tt.shift, fin.tab === 'income' ? L('ប្រភព', 'Source') : L('ប្រភេទ', 'Category'), L('ចំនួន', 'Amount'), fin.tab === 'income' ? L('កំណត់សម្គាល់', 'Note') : L('មូលហេតុ', 'Reason'), tt.status];
+    var title = fin.tab === 'income' ? tt.incomeSources : fin.tab === 'expenses' ? tt.expenses : tt.refunds;
+    var action = fin.tab === 'income' ? tt.addIncome : fin.tab === 'expenses' ? tt.addExpense : tt.addRefund;
+    body = '<div class="panel table-panel"><div class="table-toolbar"><h3>' + esc(title) + '</h3>' +
+      '<button class="primary-button" data-action="open-finance-modal" data-type="' + fin.tab + '">' + icon('plus', 15) + esc(action) + '</button></div>' +
+      dataTable(headers, rows) + '</div>';
+  } else if (fin.tab === 'cash') {
+    body = cashVarianceHtml();
+  } else if (fin.tab === 'deep') {
+    body = deepCalcHtml(entries);
+  } else {
+    body = cashTrackingHtml();
+  }
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / LEDGER', tt.pageFinancial, L('ទិន្នន័យហិរញ្ញវត្ថុពិតៗ ដែលអាចអានបានលឿនសម្រាប់ការបិទវេន។', 'The live financial ledger for confident shift closeout.'),
+      '<div class="toolbar-actions"><button class="secondary-button" data-action="fin-csv">' + icon('download', 15) + 'CSV</button></div>') +
+    '<div class="tabs-strip">' + tabStrip + '</div>' + body + '</div>';
+}
+
+function cashVarianceHtml() {
+  var fin = S.ui.fin;
+  var variance = Number(fin.actual) - Number(fin.expected);
+  var negative = variance < 0;
+  return '<div class="panel calculator-panel">' +
+    panelHeading('banknote', L('ពិនិត្យភាពខុសគ្នាសាច់ប្រាក់', 'Cash variance check')) +
+    '<div class="form-grid three">' +
+      field(L('សាច់ប្រាក់រំពឹង', 'Expected cash'), '<input type="number" data-bind="fin.expected" data-live="cash" value="' + esc(fin.expected) + '">') +
+      field(L('សាច់ប្រាក់ជាក់ស្តែង', 'Actual cash'), '<input type="number" data-bind="fin.actual" data-live="cash" value="' + esc(fin.actual) + '">') +
+      field(L('ភាពខុសគ្នា', 'Variance'), '<div class="' + cn('variance-value', negative ? 'negative' : 'positive') + '" id="cash-variance">' + (negative ? '−' : '+') + '$' + Math.abs(variance).toFixed(2) + '</div>') +
+    '</div>' +
+    '<div class="' + cn('variance-result', negative ? 'negative' : 'positive') + '" id="cash-result">' + icon('alert-triangle', 18) +
+      '<div><strong>' + (negative ? L('ត្រូវការពិនិត្យបន្ថែម', 'Needs review') : L('សាច់ប្រាក់ត្រូវគ្នា', 'Cash is balanced')) + '</strong>' +
+      '<span>' + (negative ? L('កត់ត្រាមូលហេតុ មុនពេលបិទវេន។', 'Record the reason before closing the shift.') : L('មិនមានភាពខុសគ្នាដែលត្រូវដោះស្រាយទេ។', 'No exception needs resolution.')) + '</span></div></div></div>';
+}
+
+function deepCalcHtml(entries) {
+  var gross = entries.filter(function (e) { return e.type === 'income'; }).reduce(function (s, e) { return s + e.amount; }, 0);
+  var adjustments = entries.filter(function (e) { return e.type !== 'income'; }).reduce(function (s, e) { return s + e.amount; }, 0);
+  var net = gross - adjustments;
+  return '<div class="panel calculator-panel">' +
+    panelHeading('bar-chart-3', L('សេចក្តីសង្ខេបគណនាស៊ីជម្រៅ', 'Deep calculation summary')) +
+    '<div class="calc-metrics">' +
+      '<div><span>Gross revenue</span><strong>' + formatMoney(gross) + '</strong><small>' + L('ចំណូលកត់ត្រាក្នុងបញ្ជី', 'Recorded income entries') + '</small></div>' +
+      '<div><span>Net revenue</span><strong>' + formatMoney(net) + '</strong><small>' + L('បន្ទាប់ពីចំណាយ និងសងប្រាក់', 'After expenses & refunds') + '</small></div>' +
+      '<div><span>Adjustments</span><strong>' + formatMoney(adjustments) + '</strong><small>' + L('ចំណាយ និងការសងប្រាក់', 'Expenses + refunds recorded') + '</small></div>' +
+    '</div></div>';
+}
+
+function cashTrackingHtml() {
+  var fin = S.ui.fin;
+  var expected = Number(fin.opening) + Number(fin.sales) - Number(fin.refunds);
+  return '<div class="panel calculator-panel">' +
+    panelHeading('wallet', L('តាមដានសាច់ប្រាក់ប្រចាំវេន', 'Shift cash tracking')) +
+    '<div class="form-grid four">' +
+      field(L('សាច់ប្រាក់បើក', 'Opening float'), '<input type="number" data-bind="fin.opening" data-live="tracking" value="' + esc(fin.opening) + '">') +
+      field(L('លក់សាច់ប្រាក់', 'Cash sales'), '<input type="number" data-bind="fin.sales" data-live="tracking" value="' + esc(fin.sales) + '">') +
+      field(L('សងប្រាក់', 'Refunds'), '<input type="number" data-bind="fin.refunds" data-live="tracking" value="' + esc(fin.refunds) + '">') +
+      field(L('បិទរំពឹង', 'Expected close'), '<div class="readonly-value"><strong id="tracking-close">$' + expected.toFixed(2) + '</strong><span>Auto-calculated</span></div>') +
+    '</div>' +
+    '<div class="table-toolbar"><h3>' + L('កំណត់ហេតុសាច់ប្រាក់', 'Cash log') + '</h3>' +
+      '<button class="secondary-button" data-action="cash-log-save">' + icon('save', 15) + L('រក្សាទុក', 'Save log') + '</button></div>' +
+    dataTable(['Date', 'Shift', 'Opening', 'Cash sales', 'Expected', 'Actual', 'Over / short'], [
+      ['30 Aug 2026', 'Morning', '$200', '$780', '$' + expected, '$950', '<span class="negative-text">−$30</span>'],
+      ['29 Aug 2026', 'Night', '$180', '$720', '$900', '$900', '<span class="success-text">$0</span>']
+    ]) + '</div>';
+}
+
+function exportFinanceCsv() {
+  var tab = S.ui.fin.tab;
+  var rows = S.data.finance.filter(function (e) {
+    return tab === 'income' ? e.type === 'income' : tab === 'expenses' ? e.type === 'expense' : e.type === 'refund';
+  });
+  downloadCsv('fdr-' + tab + '-' + todayIso() + '.csv',
+    ['ID', 'Date', 'Shift', 'Category', 'Description', 'Amount USD', 'Staff'],
+    rows.map(function (entry) {
+      return [entry.id, entry.dateIso, entry.shift, entry.category || '—', entry.description || '—', entry.amount.toFixed(2), entry.staff];
+    }));
+  toastSuccess(L('ឯកសារ CSV បានទាញយក', 'Ledger CSV downloaded'));
+}
+
+function viewInquiries() {
+  var tt = t();
+  var f = S.ui.inq;
+  var filtered = S.data.inquiries.filter(function (item) {
+    return (!f.category || item.category === f.category) && (!f.outcome || item.outcome === f.outcome);
+  });
+  var rows = filtered.map(function (item) {
+    return [item.id, item.dateIso, item.channel, item.category, item.guestName || '—', item.details,
+      item.outcome === 'resolved'
+        ? '<span class="status-pill approved">' + L('ជោគជ័យ', 'Yes') + '</span>'
+        : '<span class="status-pill pending">' + L('តាមដាន', 'Follow up') + '</span>',
+      item.followUp || '—', item.staff];
+  });
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / GUEST CARE', tt.pageInquiries, L('កត់ត្រាសំណួរភ្ញៀវពិតៗ ដើម្បីឱ្យការតាមដានមិនបាត់បង់។', 'Log every guest question so follow-up never gets lost.'),
+      '<button class="primary-button" data-action="open-inquiry-modal">' + icon('plus', 16) + esc(tt.logInquiry) + '</button>') +
+    '<div class="toolbar-strip"><div class="toolbar-group">' +
+      '<select data-bind="inq.category" data-change="inquiries"><option value="">' + esc(tt.allCategories) + '</option>' +
+        ['Room info', 'Booking', 'Special', 'Complaint', 'General'].map(function (c) {
+          return '<option value="' + c + '"' + (f.category === c ? ' selected' : '') + '>' + c + '</option>';
+        }).join('') + '</select>' +
+      '<select data-bind="inq.outcome" data-change="inquiries"><option value="">' + esc(tt.allOutcomes) + '</option>' +
+        '<option value="resolved"' + (f.outcome === 'resolved' ? ' selected' : '') + '>' + L('ដោះស្រាយរួច', 'Resolved') + '</option>' +
+        '<option value="follow_up"' + (f.outcome === 'follow_up' ? ' selected' : '') + '>' + L('តាមដាន', 'Follow up') + '</option></select>' +
+    '</div><span class="toolbar-note">' + filtered.length + ' ' + L('កំណត់ត្រា', 'records') + '</span></div>' +
+    '<div class="panel table-panel">' +
+    dataTable(['ID', tt.date, L('បណ្តាញ', 'Channel'), L('ប្រភេទ', 'Category'), L('អតិថិជន', 'Guest'), L('ព័ត៌មានលម្អិត', 'Details'), L('ជោគជ័យ', 'Outcome'), L('មូលហេតុ', 'Reason'), L('បុគ្គលិក', 'Staff')], rows) +
+    '</div></div>';
+}
+
+function viewCloseout() {
+  var tt = t();
+  var c = S.ui.close;
+  var afternoonOpen = Number(c.morningClose);
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / THE LAST PAGE', tt.pageCloseout, L('សន្លឹកបិទបញ្ជី និងប្រគល់វេនដែលភ្ជាប់សាច់ប្រាក់ពីវេនមួយទៅវេនបន្ទាប់។', 'A connected closeout and handover sheet that carries cash from one shift into the next.'),
+      '<div class="toolbar-actions">' +
+      '<button class="secondary-button" data-action="close-csv">' + icon('download', 15) + 'CSV</button>' +
+      '<button class="secondary-button" data-action="close-print">' + icon('printer', 15) + 'PDF</button>' +
+      '<button class="primary-button" data-action="close-save">' + icon('save', 15) + esc(tt.save) + '</button></div>') +
+    '<div class="closeout-sheet">' +
+      '<div class="closeout-banner"><div><span class="eyebrow">DAILY FRONT OFFICE CLOSEOUT</span>' +
+        '<h3>' + L('សន្លឹកបិទបញ្ជី និងផ្ទេរវេនការងារផ្នែកទទួលភ្ញៀវ', 'Daily front office closeout & connected handover') + '</h3></div>' +
+        (c.saved ? '<span class="status-pill approved">' + icon('check-circle', 13) + 'Saved</span>' : '') + '</div>' +
+      '<div class="form-grid two">' +
+        field(tt.date + ' / Date', '<input type="date" value="' + todayIso() + '">') +
+        field(L('ថ្ងៃការងារ', 'Day of week'), '<select><option>Sunday / អាទិត្យ</option><option>Monday / ចន្ទ</option><option>Tuesday / អង្គារ</option></select>') +
+      '</div>' +
+      shiftBlock('morning', L('១. របាយការណ៍ប្រតិបត្តិការវេនព្រឹក', '1. Morning shift report'),
+        '<div class="form-grid three">' +
+          field(L('ឈ្មោះបុគ្គលិក', 'Staff name'), '<input value="John Doe">') +
+          field('Opening float · USD', '<input type="number" value="200">') +
+          field('Closing float · USD', '<input type="number" data-bind="close.morningClose" data-live="closeout" value="' + esc(c.morningClose) + '">') +
+        '</div>' +
+        field(L('បញ្ហាដែលនៅសល់', 'Pending tasks'), '<textarea rows="2" placeholder="' + L('កំណត់ចំណាំសម្រាប់វេនរសៀល...', 'Notes for the afternoon shift...') + '"></textarea>')) +
+      shiftBlock('afternoon', L('២. របាយការណ៍ប្រតិបត្តិការវេនរសៀល', '2. Afternoon shift report'),
+        '<div class="form-grid three">' +
+          field(L('ឈ្មោះបុគ្គលិក', 'Staff name'), '<input value="Dara Lim">') +
+          field('Opening float · USD', '<div class="readonly-value"><strong id="closeout-afternoon-open">$' + afternoonOpen.toFixed(2) + '</strong><span>Linked from morning</span></div>') +
+          field('Closing float · USD', '<input type="number" value="1080">') +
+        '</div>' +
+        '<div class="form-grid two">' +
+          field('Check-in average', '<input placeholder="minutes">') +
+          field(L('បញ្ហាដែលនៅសល់', 'Pending tasks'), '<textarea rows="2"></textarea>') +
+        '</div>') +
+      shiftBlock('night', L('៣. របាយការណ៍ប្រតិបត្តិការវេនយប់', '3. Night shift report'),
+        '<div class="form-grid three">' +
+          field(L('ឈ្មោះបុគ្គលិក', 'Staff name'), '<input value="Nary Chann">') +
+          field('Opening float · USD', '<div class="readonly-value"><strong>$1,080.00</strong><span>Linked from afternoon</span></div>') +
+          field('Closing float · USD', '<input type="number" value="720">') +
+        '</div>' +
+        field(L('សេចក្តីសង្ខេបបិទថ្ងៃ', 'End-of-day summary'), '<textarea rows="2" placeholder="' + L('កត់ត្រាអ្វីដែលវេនព្រឹកត្រូវដឹង...', 'Capture what the morning team should know...') + '"></textarea>')) +
+    '</div>' +
+    '<div class="panel image-panel closeout-photo"><img src="' + (A['key-tray'] || '') + '" alt="Hotel key trays behind the front desk">' +
+      '<div class="image-panel-overlay"><span class="eyebrow">FDR / FIELD NOTE</span>' +
+        '<strong>' + L('សោ និងកំណត់ហេតុបានត្រូវចាត់តាំង', 'Keys and logs, in order') + '</strong>' +
+        '<p>' + L('សូមពិនិត្យថាសោទាំងអស់បានត្រឡប់មុនពេលចុះហត្ថលេខាបិទវេន។', 'Confirm every key is back on the board before signing the closeout.') + '</p></div>' +
+    '</div></div>';
+}
+function shiftBlock(tone, title, children) {
+  var time = tone === 'morning' ? '07:00 — 15:00' : tone === 'afternoon' ? '15:00 — 23:00' : '23:00 — 07:00';
+  return '<section class="' + cn('shift-block', tone) + '"><div class="shift-block-heading"><span class="shift-block-rule"></span>' +
+    '<h3>' + esc(title) + '</h3><span class="shift-block-time">' + time + '</span></div>' + children + '</section>';
+}
+
+function viewFeedback() {
+  var tt = t();
+  var f = S.ui.fb;
+  var entries = S.data.feedback;
+  var list;
+  if (!entries.length) {
+    list = '<div class="feedback-empty"><div class="empty-seal">' + sealImg() + '</div><h3>' + esc(tt.noFeedback) + '</h3>' +
+      '<p>' + L('ចាប់ផ្តើមដោយកត់ត្រាមតិពីការសន្ទនានៅផ្នែកទទួលភ្ញៀវ។', 'Start by recording feedback from a conversation at the front desk.') + '</p></div>';
+  } else {
+    list = '<div class="feedback-list-panel"><div class="feedback-list">' + entries.map(function (entry) {
+      return '<div class="feedback-row" key="' + esc(entry.id) + '"><div class="feedback-row-head">' +
+        '<strong>' + esc(entry.guestName || L('អនាមិក', 'Anonymous guest')) + '</strong>' +
+        '<span>' + esc(entry.channel) + ' · ' + esc(entry.dateIso) + (entry.room ? ' · ' + L('បន្ទប់', 'Room') + ' ' + esc(entry.room) : '') + '</span></div>' +
+        '<p>' + esc(entry.comment) + '</p><em>' + L('កត់ត្រាដោយ', 'Logged by') + ' ' + esc(entry.staff) + '</em></div>';
+    }).join('') + '</div></div>';
+  }
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / LISTEN CLOSELY', tt.customerFeedback, L('កត់ត្រាមតិដែលបានទទួលដោយផ្ទាល់ — រក្សាទុកក្នុងប្រព័ន្ធ។', 'Log feedback received directly from guests — saved to the record.'),
+      '<span class="toolbar-note">' + entries.length + ' ' + L('កំណត់ត្រា', 'entries') + '</span>') +
+    '<div class="feedback-layout"><div class="panel feedback-form-panel">' +
+      panelHeading('star', tt.addFeedback) +
+      (f.saved ? '<div class="feedback-saved" id="fb-saved">' + icon('check-circle', 15) + L('បានរក្សាទុក', 'Saved') + '</div>' : '') +
+      '<div class="form-grid two">' +
+        field(L('កាលបរិច្ឆេទ', 'Date'), '<input type="date" data-bind="fb.dateIso" value="' + esc(f.dateIso) + '">') +
+        field(L('ប្រភព', 'Channel'), '<select data-bind="fb.channel"><option>Front desk</option><option>Phone</option><option>Email</option><option>Review card</option></select>') +
+      '</div>' +
+      '<div class="form-grid two">' +
+        field(L('ឈ្មោះភ្ញៀវ (ជាជម្រើស)', 'Guest name (optional)'), '<input data-bind="fb.guestName" value="' + esc(f.guestName) + '">') +
+        field(L('លេខបន្ទប់ (ជាជម្រើស)', 'Room (optional)'), '<input data-bind="fb.room" value="' + esc(f.room) + '">') +
+      '</div>' +
+      field(L('មតិភ្ញៀវ', 'Guest feedback'), '<textarea rows="5" data-bind="fb.comment" placeholder="' + L('សរសេរតាមពាក្យដែលភ្ញៀវបានប្រាប់...', 'Capture the guest\'s words as accurately as possible...') + '">' + esc(f.comment) + '</textarea>') +
+      '<div class="form-actions"><button class="primary-button" data-action="fb-save" ' + (!f.comment.trim() ? 'disabled' : '') + '>' + icon('save', 15) + esc(tt.save) + '</button></div>' +
+    '</div>' + list + '</div></div>';
+}
+
+function viewMonthly() {
+  var tt = t();
+  var month = S.ui.monthly.month;
+  var monthReports = S.data.reports.filter(function (report) { return report.status !== 'Draft' && report.dateIso.slice(0, 7) === month; });
+  var avgOccupancy = monthReports.length ? Math.round(monthReports.reduce(function (sum, r) { return sum + parseInt(r.occupancy, 10); }, 0) / monthReports.length) : 0;
+  var grossIncome = monthReports.reduce(function (sum, r) { return sum + (r.incomeAmount || 0); }, 0);
+  var parts = month.split('-');
+  var year = Number(parts[0]) || new Date().getFullYear();
+  var monthIndex = Number(parts[1]) || 1;
+  var daysInMonth = new Date(year, monthIndex, 0).getDate();
+  var perDay = {};
+  monthReports.forEach(function (report) {
+    var day = Number(report.dateIso.slice(8, 10));
+    (perDay[day] = perDay[day] || []).push(parseInt(report.occupancy, 10));
+  });
+  var pointDays = Object.keys(perDay).map(Number).sort(function (a, b) { return a - b; });
+  var points = pointDays.map(function (day) {
+    var values = perDay[day];
+    return { day: day, pct: Math.round(values.reduce(function (s, v) { return s + v; }, 0) / values.length) };
+  });
+  var coverage = Math.min(100, Math.round((pointDays.length / daysInMonth) * 100));
+  var withNotes = monthReports.filter(function (r) { return r.notes; }).length;
+  var noteShare = monthReports.length ? Math.round((withNotes / monthReports.length) * 100) : 0;
+  var nightShare = monthReports.length ? Math.round((monthReports.filter(function (r) { return r.shift === 'Night'; }).length / monthReports.length) * 100) : 0;
+  var dots = points.map(function (point) {
+    return '<span style="left:' + (4 + ((point.day - 1) / Math.max(1, daysInMonth - 1)) * 84) + '%;top:' + (88 - point.pct * 0.78) + '%"></span>';
+  }).join('');
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / MONTHLY PULSE', tt.pageMonthly, L('ទិដ្ឋភាពប្រចាំខែពីរបាយការណ៍វេនពិតៗ។', 'A monthly view computed from real submitted reports.'),
+      '<div class="toolbar-actions"><input class="compact-input" type="month" data-bind="monthly.month" data-change="monthly" value="' + esc(month) + '">' +
+      '<button class="secondary-button" data-action="month-csv" ' + (!monthReports.length ? 'disabled' : '') + '>' + icon('download', 15) + 'Export</button></div>') +
+    '<div class="report-metric-grid">' +
+      metricBlock('Occupancy', avgOccupancy + '%', monthReports.length + ' reports') +
+      metricBlock('Gross income', formatMoney(grossIncome), L('ពីរបាយការណ៍', 'from reports')) +
+      metricBlock('Days covered', pointDays.length + ' / ' + daysInMonth, coverage + '%') +
+      metricBlock('Notes filed', noteShare + '%', withNotes + ' ' + L('របាយការណ៍', 'reports')) +
+    '</div>' +
+    '<div class="content-grid two-column"><div class="panel">' +
+      panelHeading('bar-chart-3', L('អត្រាកាន់កាប់ប្រចាំខែ', 'Monthly occupancy')) +
+      '<div class="line-chart"><div class="line-chart-path">' + dots + '</div>' +
+      '<div class="line-labels"><span>01</span><span>' + pad2(Math.min(7, daysInMonth)) + '</span><span>' + pad2(Math.min(14, daysInMonth)) + '</span><span>' + pad2(Math.min(21, daysInMonth)) + '</span><span>' + pad2(daysInMonth) + '</span></div></div>' +
+    '</div><div class="panel">' +
+      panelHeading('clipboard-check', L('គុណភាពប្រគល់វេន', 'Handover quality')) +
+      '<div class="quality-list">' +
+        qualityRow(L('ថ្ងៃមានរបាយការណ៍', 'Days with reports'), coverage + '%') +
+        qualityRow(L('របាយការណ៍មានកំណត់ចំណាំ', 'Reports with notes'), noteShare + '%') +
+        qualityRow(L('របាយការណ៍វេនយប់', 'Night audits filed'), nightShare + '%') +
+      '</div>' +
+    '</div></div></div>';
+}
+function metricBlock(label, value, change) {
+  return '<div class="metric-block"><span>' + esc(label) + '</span><strong>' + esc(value) + '</strong><small>' + icon('arrow-up-right', 12) + esc(change) + '</small></div>';
+}
+function qualityRow(label, value) {
+  return '<div class="quality-row"><div><span>' + esc(label) + '</span><strong>' + esc(value) + '</strong></div>' +
+    '<div class="quality-bar"><i style="width:' + esc(value) + '"></i></div></div>';
+}
+function exportMonthlyCsv() {
+  var month = S.ui.monthly.month;
+  var monthReports = S.data.reports.filter(function (report) { return report.status !== 'Draft' && report.dateIso.slice(0, 7) === month; });
+  downloadCsv('fdr-monthly-' + month + '.csv',
+    ['Report ID', 'Date', 'Shift', 'Reporter', 'Occupancy', 'Income', 'Status'],
+    monthReports.map(function (r) { return [r.id, r.dateIso, r.shift, r.reporter, r.occupancy, r.income, r.status]; }));
+  toastSuccess(L('ឯកសារ CSV បានទាញយក', 'Monthly CSV downloaded'));
+}
+
+function viewYearly() {
+  var tt = t();
+  var year = String(new Date().getFullYear());
+  var ytd = S.data.reports.filter(function (report) { return report.status !== 'Draft' && report.dateIso.slice(0, 4) === year; });
+  var avgOccupancy = ytd.length ? Math.round(ytd.reduce(function (sum, r) { return sum + parseInt(r.occupancy, 10); }, 0) / ytd.length) : 0;
+  var totalIncome = ytd.reduce(function (sum, r) { return sum + (r.incomeAmount || 0); }, 0);
+  var yearInquiries = S.data.inquiries.filter(function (item) { return item.dateIso.slice(0, 4) === year; });
+  var resolvedShare = yearInquiries.length ? Math.round((yearInquiries.filter(function (i) { return i.outcome === 'resolved'; }).length / yearInquiries.length) * 100) : 0;
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / ANNUAL VIEW', tt.pageYearly, L('សេចក្តីសង្ខេបនៃការងារផ្នែកទទួលភ្ញៀវក្នុងឆ្នាំ ', 'A year-to-date view of front office operations in ') + year + '។',
+      '<button class="secondary-button" data-action="year-csv" ' + (!ytd.length ? 'disabled' : '') + '>' + icon('download', 15) + L('Export year', 'Export year') + '</button>') +
+    '<div class="yearly-hero"><img src="' + (A.hallway || '') + '" alt="Hotel corridor leading to reception"><div>' +
+      '<span class="eyebrow">' + year + ' / YEAR TO DATE</span>' +
+      '<h3>' + L('ភាពទៀងទាត់នៅក្នុងរាល់ការប្រគល់វេន', 'Consistency in every handoff.') + '</h3>' +
+      '<p>' + L('ប្រព័ន្ធកត់ត្រាដែលជួយឱ្យក្រុមមានភាពច្បាស់លាស់ និងត្រៀមខ្លួនបានល្អជាងមុន។', 'A living record that helps the team stay clear, accountable, and ready.') + '</p></div></div>' +
+    '<div class="report-metric-grid">' +
+      metricBlock('YTD occupancy', avgOccupancy + '%', ytd.length + ' ' + L('របាយការណ៍', 'reports')) +
+      metricBlock('YTD income', formatMoney(totalIncome), L('ពីរបាយការណ៍វេន', 'from shift reports')) +
+      metricBlock('Reports', String(ytd.length), year) +
+      metricBlock('Guest inquiries', String(yearInquiries.length), resolvedShare + '% ' + L('បានដោះស្រាយ', 'resolved')) +
+    '</div></div>';
+}
+function exportYearCsv() {
+  var year = String(new Date().getFullYear());
+  var ytd = S.data.reports.filter(function (report) { return report.status !== 'Draft' && report.dateIso.slice(0, 4) === year; });
+  downloadCsv('fdr-year-' + year + '.csv',
+    ['Report ID', 'Date', 'Shift', 'Reporter', 'Occupancy', 'Income', 'Status'],
+    ytd.map(function (r) { return [r.id, r.dateIso, r.shift, r.reporter, r.occupancy, r.income, r.status]; }));
+  toastSuccess(L('ឯកសារ CSV បានទាញយក', 'Yearly CSV downloaded'));
+}
+
+function viewHistory() {
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / ARCHIVE', t().pageHistory, L('ស្វែងរក និងពិនិត្យរបាយការណ៍ដែលបានរក្សាទុក។', 'Search and review saved reports.'),
+      '<div class="search-field">' + icon('search', 15) + '<input data-bind="history.query" data-live="history" placeholder="' + L('ស្វែងរកលេខរបាយការណ៍...', 'Search report ID...') + '" value="' + esc(S.ui.history.query) + '"></div>') +
+    '<div class="panel table-panel" id="history-table">' +
+    buildHistoryTable() +
+    '</div></div>';
+}
+
+function viewAudit() {
+  var tt = t();
+  var items = S.data.audit.slice(0, 12);
+  var html = items.map(function (item, index) {
+    var dateLine = index === 0 ? '<div class="audit-date"><span class="eyebrow">' + esc(String(item.dateIso).toUpperCase()) + '</span><strong>' + L('ថ្ងៃនេះ', 'Today') + '</strong></div>' : '';
+    return dateLine + '<div class="audit-row"><span class="audit-time">' + esc(item.time) + '</span><span class="audit-line"></span>' +
+      '<div class="audit-event"><div><strong>' + esc(item.event) + '</strong><span>' + esc(item.user) + '</span></div><em>' + esc(item.area) + '</em></div></div>';
+  }).join('');
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / ACCOUNTABILITY', tt.pageAudit, L('កំណត់ហេតុសកម្មភាពសម្រាប់ការតាមដានប្រព័ន្ធ។', 'A clear activity trail for operational accountability.')) +
+    '<div class="panel timeline-panel">' + (html || '<p style="color:var(--muted);font-size:12px">' + esc(L('មិនមានកំណត់ហេតុទេ', 'No audit events yet')) + '</p>') + '</div></div>';
+}
+
+function viewShifts() {
+  var tt = t();
+  var roster = [
+    { name: 'Morning', time: '07:00 — 15:00', owner: 'John Doe', role: 'Front office manager', tone: 'sunrise' },
+    { name: 'Afternoon', time: '15:00 — 23:00', owner: 'Dara Lim', role: 'Duty supervisor', tone: 'sun' },
+    { name: 'Night', time: '23:00 — 07:00', owner: 'Nary Chann', role: 'Night auditor', tone: 'moon' }
+  ];
+  var cards = roster.map(function (item) {
+    var iconName = item.tone === 'sunrise' ? 'sunrise' : item.tone === 'sun' ? 'sun' : 'moon';
+    return '<div class="roster-card"><span class="' + cn('roster-icon', item.tone) + '">' + icon(iconName, 18) + '</span>' +
+      '<div><span class="eyebrow">' + esc(item.time) + '</span><h3>' + esc(item.name) + ' shift</h3><strong>' + esc(item.owner) + '</strong><p>' + esc(item.role) + '</p></div>' +
+      '<span class="status-pill approved">' + icon('check', 12) + 'Ready</span></div>';
+  }).join('');
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / ROTA', tt.pageShifts, L('គ្រប់គ្រងអ្នកទទួលខុសត្រូវ និងការប្រគល់វេនប្រចាំថ្ងៃ។', 'Manage shift ownership and daily handoffs.'),
+      '<button class="primary-button" data-action="shift-add">' + icon('plus', 16) + esc(tt.addShift) + '</button>') +
+    '<div class="shift-roster">' + cards + '</div></div>';
+}
+
+function viewAdmin() {
+  var tt = t();
+  var section = S.ui.admin.section;
+  var pending = S.data.pendingUsers;
+  var users = S.data.users;
+  var panel;
+  if (section === 'users') {
+    var approvals = !pending.length ? '<p class="settings-empty" style="padding:4px 18px">' + L('មិនមានសំណើរង់ចាំការអនុម័តទេ។', 'No requests waiting for approval.') + '</p>' :
+      '<div class="approval-list">' + pending.map(function (person) {
+        var initials = String(person.name).split(' ').map(function (p) { return p.charAt(0); }).join('').slice(0, 2).toUpperCase();
+        return '<div class="approval-row"><div class="approval-person"><div class="user-avatar dark">' + esc(initials) + '</div>' +
+          '<div><strong>' + esc(person.name) + '</strong><span>' + esc(person.email) + ' · ' + esc(person.department) + ' · ' + esc(person.shift) + '</span></div></div>' +
+          '<div class="approval-actions">' +
+          '<button class="primary-button" data-action="user-status" data-id="' + esc(person.id) + '" data-status="active">' + icon('check', 15) + L('អនុម័ត', 'Approve') + '</button>' +
+          '<button class="secondary-button" data-action="user-status" data-id="' + esc(person.id) + '" data-status="rejected">' + icon('x', 15) + L('បដិសេធ', 'Reject') + '</button>' +
+          '</div></div>';
+      }).join('') + '</div>';
+    var teamRows = users.map(function (person) {
+      return [person.name, person.email, person.role, person.department,
+        person.status === 'active'
+          ? '<span class="status-pill approved">' + L('សកម្ម', 'Active') + '</span>'
+          : '<span class="status-pill draft">' + L('រង់ចាំ', 'Pending') + '</span>'];
+    });
+    panel = '<div class="panel settings-panel">' +
+      panelHeading('user-plus', L('សំណើចុះឈ្មោះ', 'Access requests'), '<span class="toolbar-note">' + pending.length + ' ' + L('រង់ចាំ', 'pending') + '</span>') +
+      approvals + '<div class="settings-divider"></div>' +
+      panelHeading('users', L('ក្រុមការងារ', 'Team')) +
+      dataTable([L('ឈ្មោះ', 'Name'), 'Email', L('តួនាទី', 'Role'), L('ផ្នែក', 'Department'), tt.status], teamRows) +
+      '</div>';
+  } else {
+    panel = '<div class="panel settings-panel">' +
+      panelHeading('palette', L('ភាសា និងរូបរាង', 'Language & appearance')) +
+      '<div class="settings-row"><div><strong>' + L('ភាសាប្រព័ន្ធ', 'System language') + '</strong><span>' + L('Khmer is the current display language.', 'English is the current display language.') + '</span></div>' +
+        '<button class="secondary-button" data-action="toggle-lang">' + L('ប្តូរទៅភាសាខ្មែរ', 'Switch to English') + '</button></div>' +
+      '<div class="settings-row"><div><strong>' + L('តំបន់ពេលវេលា', 'Time zone') + '</strong><span>Asia/Phnom_Penh · UTC+7</span></div><span class="setting-value">UTC +7</span></div>' +
+      '<div class="settings-row"><div><strong>' + L('ម៉ោងបិទរបាយការណ៍', 'Report close time') + '</strong><span>' + L('បញ្ចូនការរំលឹកមុនពេលវេនបន្ទាប់', 'Reminders are sent before the next shift.') + '</span></div><span class="setting-value">11:45</span></div>' +
+      '</div>';
+  }
+  return '<div class="section-stack">' +
+    sectionHeader('FDR / CONTROL ROOM', tt.pageAdmin, L('អ្នកប្រើប្រាស់ សិទ្ធិ និងការកំណត់ដែលធ្វើឱ្យ FDR សមនឹងក្រុមអ្នក។', 'People, permissions, and the settings that keep FDR aligned with your team.')) +
+    '<div class="settings-layout"><div class="settings-nav">' +
+      '<button class="' + (section === 'users' ? 'settings-nav-active' : '') + '" data-action="admin-section" data-section="users">' + icon('user-plus', 16) + L('អ្នកប្រើប្រាស់', 'Users') + '</button>' +
+      '<button class="' + (section === 'appearance' ? 'settings-nav-active' : '') + '" data-action="admin-section" data-section="appearance">' + icon('palette', 16) + L('រូបរាង', 'Appearance') + '</button>' +
+    '</div>' + panel + '</div></div>';
+}
+
+/* ============================= modals ============================= */
+
+function modalTask() {
+  var m = S.ui.taskModal;
+  if (!m) return '';
+  return '<div class="modal-backdrop" data-close-on-backdrop><div class="modal-sheet">' +
+    '<div class="modal-heading"><div><span class="eyebrow">FDR / WORK QUEUE</span><h2>' + esc(t().newTask) + '</h2></div>' +
+    '<button class="icon-button" data-action="close-modal" aria-label="Close">' + icon('x', 18) + '</button></div>' +
+    '<div class="modal-body">' +
+      field(L('ចំណងជើងភារកិច្ច', 'Task title'), '<input id="task-title" data-bind="taskModal.title" value="' + esc(m.title) + '" placeholder="' + L('ឧ. ពិនិត្យបន្ទប់ VIP', 'e.g. Verify VIP rooms') + '">') +
+      '<div class="form-grid two">' +
+        field(L('អាទិភាព', 'Priority'), '<select data-bind="taskModal.priority"><option value="High"' + (m.priority === 'High' ? ' selected' : '') + '>' + esc(t().high) + '</option><option value="Med"' + (m.priority === 'Med' ? ' selected' : '') + '>' + esc(t().med) + '</option><option value="Low"' + (m.priority === 'Low' ? ' selected' : '') + '>' + esc(t().low) + '</option></select>') +
+        field(L('ម៉ោងកំណត់', 'Due time'), '<input type="time" data-bind="taskModal.due" value="' + esc(m.due) + '">') +
+      '</div></div>' +
+    '<div class="modal-actions"><button class="secondary-button" data-action="close-modal">' + L('បោះបង់', 'Cancel') + '</button>' +
+    '<button class="primary-button" data-action="task-add" ' + (!m.title.trim() ? 'disabled' : '') + ' ' + (S.busy ? 'disabled' : '') + '>' + icon('plus', 15) + esc(t().newTask) + '</button></div></div></div>';
+}
+
+function modalInquiry() {
+  var m = S.ui.inquiryModal;
+  if (!m) return '';
+  return '<div class="modal-backdrop" data-close-on-backdrop><div class="modal-sheet">' +
+    '<div class="modal-heading"><div><span class="eyebrow">FDR / GUEST CARE</span><h2>' + esc(t().logInquiry) + '</h2></div>' +
+    '<button class="icon-button" data-action="close-modal" aria-label="Close">' + icon('x', 18) + '</button></div>' +
+    '<div class="modal-body">' +
+      '<div class="form-grid two">' +
+        field(L('បណ្តាញ', 'Channel'), '<select data-bind="inquiryModal.channel"><option>Front desk</option><option>Phone</option><option>WhatsApp</option><option>Email</option></select>') +
+        field(L('ប្រភេទ', 'Category'), '<select data-bind="inquiryModal.category"><option>Room info</option><option>Booking</option><option>Special</option><option>Complaint</option><option>General</option></select>') +
+      '</div>' +
+      field(L('ឈ្មោះអតិថិជន', 'Guest name'), '<input id="inquiry-guest" data-bind="inquiryModal.guestName" value="' + esc(m.guestName) + '" placeholder="' + L('ឧ. A. Sok', 'e.g. A. Sok') + '">') +
+      field(L('ព័ត៌មានលម្អិត', 'Details'), '<textarea rows="3" data-bind="inquiryModal.details" placeholder="' + L('សំណួរ ឬសំណើរបស់ភ្ញៀវ...', 'What did the guest ask for...') + '">' + esc(m.details) + '</textarea>') +
+      '<div class="form-grid two">' +
+        field(L('លទ្ធផល', 'Outcome'), '<select data-bind="inquiryModal.outcome"><option value="resolved"' + (m.outcome === 'resolved' ? ' selected' : '') + '>' + L('ដោះស្រាយរួច', 'Resolved') + '</option><option value="follow_up"' + (m.outcome === 'follow_up' ? ' selected' : '') + '>' + L('ត្រូវតាមដាន', 'Follow up') + '</option></select>') +
+        field(L('កំណត់សម្គាល់តាមដាន', 'Follow-up note'), '<input data-bind="inquiryModal.followUp" value="' + esc(m.followUp) + '" placeholder="' + L('ឧ. ផ្លាស់បន្ទប់', 'e.g. Room move') + '">') +
+      '</div></div>' +
+    '<div class="modal-actions"><button class="secondary-button" data-action="close-modal">' + L('បោះបង់', 'Cancel') + '</button>' +
+    '<button class="primary-button" data-action="inquiry-add" ' + (!m.details.trim() ? 'disabled' : '') + ' ' + (S.busy ? 'disabled' : '') + '>' + icon('plus', 15) + esc(t().logInquiry) + '</button></div></div></div>';
+}
+
+function modalFinance() {
+  var m = S.ui.financeModal;
+  if (!m) return '';
+  var tt = t();
+  var heading = m.type === 'income' ? tt.addIncome : m.type === 'expense' ? tt.addExpense : tt.addRefund;
+  var parsed = Number(m.amount);
+  var valid = m.category.trim().length > 0 && isFinite(parsed) && parsed > 0;
+  var catLabel = m.type === 'income' ? L('ប្រភព', 'Source') : L('ប្រភេទ', 'Category');
+  var catPlaceholder = m.type === 'income' ? L('ឧ. ចំណូលបន្ទប់', 'e.g. Room nights') : L('ឧ. សម្ភារៈ', 'e.g. Supplies');
+  return '<div class="modal-backdrop" data-close-on-backdrop><div class="modal-sheet">' +
+    '<div class="modal-heading"><div><span class="eyebrow">FDR / LEDGER</span><h2>' + esc(heading) + '</h2></div>' +
+    '<button class="icon-button" data-action="close-modal" aria-label="Close">' + icon('x', 18) + '</button></div>' +
+    '<div class="modal-body">' +
+      '<div class="form-grid two">' +
+        field(tt.date, '<input type="date" data-bind="financeModal.dateIso" value="' + esc(m.dateIso) + '">') +
+        field(tt.shift, '<select data-bind="financeModal.shift"><option>Morning</option><option>Afternoon</option><option>Night</option></select>') +
+      '</div>' +
+      '<div class="form-grid two">' +
+        field(catLabel, '<input id="finance-category" data-bind="financeModal.category" value="' + esc(m.category) + '" placeholder="' + esc(catPlaceholder) + '">') +
+        field(L('ចំនួន · USD', 'Amount · USD'), '<input type="number" min="0" step="0.01" data-bind="financeModal.amount" value="' + esc(m.amount) + '" placeholder="0.00">') +
+      '</div>' +
+      field(L('កំណត់សម្គាល់', 'Note'), '<input data-bind="financeModal.description" value="' + esc(m.description) + '" placeholder="' + L('ព័ត៌មានបន្ថែម (ជាជម្រើស)', 'Extra context (optional)') + '">') +
+    '</div>' +
+    '<div class="modal-actions"><button class="secondary-button" data-action="close-modal">' + L('បោះបង់', 'Cancel') + '</button>' +
+    '<button class="primary-button" data-action="finance-add" ' + (!valid ? 'disabled' : '') + ' ' + (S.busy ? 'disabled' : '') + '>' + icon('plus', 15) + esc(heading) + '</button></div></div></div>';
+}
+
+/* ============================= app shell ============================= */
+
+function appHtml() {
+  var tt = t();
+  var collapsed = S.ui.sidebarCollapsed;
+  var navHtml = NAV.filter(function (item) {
+    return S.user.role === 'Admin' || item.key !== 'admin';
+  }).map(function (item) {
+    var count = item.key === 'tasks' ? S.data.tasks.filter(function (task) { return task.status !== 'Completed'; }).length : 0;
+    return '<button class="' + cn('nav-item', S.view === item.key && 'nav-item-active') + '" data-action="nav" data-view="' + item.key + '"' +
+      (collapsed ? ' title="' + esc(tt[item.label]) + '"' : '') + '>' + icon(item.icon, 17) + '<span>' + esc(tt[item.label]) + '</span>' +
+      (item.key === 'tasks' && count ? '<em class="nav-count">' + count + '</em>' : '') + '</button>';
+  }).join('');
+  var initials = String(S.user.name).split(' ').map(function (p) { return p.charAt(0); }).join('').slice(0, 2).toUpperCase();
+  var viewHtml = {
+    dashboard: viewDashboard(), report: viewReport(), shiftreports: viewShiftReports(), tasks: viewTasks(),
+    financial: viewFinancial(), inquiries: viewInquiries(), closeout: viewCloseout(), feedback: viewFeedback(),
+    monthly: viewMonthly(), yearly: viewYearly(), history: viewHistory(), audit: viewAudit(), shifts: viewShifts(), admin: viewAdmin()
+  }[S.view] || viewDashboard();
+
+  return '<div class="app-shell">' +
+    '<aside class="' + cn('sidebar', collapsed && 'sidebar-collapsed', S.ui.mobileNavOpen && 'sidebar-mobile-open') + '">' +
+      '<div class="sidebar-header">' +
+        '<button class="brand-lockup" data-action="nav" data-view="dashboard" aria-label="FDR dashboard"><span class="rail-seal seal-emblem">' + sealImg('brand-seal') + '</span>' +
+          '<span class="brand-wordmark">FDR</span></button>' +
+        '<button class="icon-button sidebar-collapse-button" data-action="toggle-sidebar" aria-label="Toggle navigation">' + icon(collapsed ? 'panel-left-open' : 'panel-left-close', 18) + '</button>' +
+      '</div>' +
+      '<div class="rail-kicker">' + (S.lang === 'km' ? 'ប្រព័ន្ធប្រតិបត្តិការ' : 'OPERATIONS DESK') + '</div>' +
+      '<nav class="sidebar-nav" aria-label="Primary navigation">' + navHtml + '</nav>' +
+      '<div class="sidebar-footer"><div class="user-info">' +
+        '<div class="user-avatar">' + esc(initials) + '</div>' +
+        '<div class="user-details"><strong>' + esc(S.user.name) + '</strong><span>' + esc(S.user.role) + ' · ' + esc(S.shift) + '</span></div>' +
+      '</div>' +
+      '<button class="icon-button logout-button" data-action="logout" aria-label="Sign out">' + icon('log-out', 17) + '</button></div>' +
+    '</aside>' +
+
+    '<div class="main-content">' +
+      '<header class="topbar"><div class="topbar-left">' +
+        '<button class="icon-button mobile-menu-button" data-action="toggle-mobile" aria-label="Open navigation">' + icon('menu', 19) + '</button>' +
+        '<div><div class="eyebrow">' + (S.lang === 'km' ? 'ផ្នែកទទួលភ្ញៀវ / ថ្ងៃនេះ' : 'FRONT OFFICE / TODAY') + '</div>' +
+          '<h1>' + esc(tt[TITLES[S.view]]) + '</h1></div>' +
+      '</div>' +
+      '<div class="topbar-right">' +
+        '<button class="language-switch" data-action="toggle-lang" aria-label="Switch language">' + (S.lang === 'km' ? 'EN' : 'ខ្មែរ') + '</button>' +
+        '<div class="notification-wrap"><button class="icon-button notification-button" data-action="notif" aria-label="Notifications">' + icon('bell', 18) +
+          (S.ui.notifCount > 0 ? '<span class="notification-dot">' + S.ui.notifCount + '</span>' : '') + '</button>' +
+        (S.ui.notifOpen ? '<div class="notification-popover"><div class="popover-heading"><strong>' + esc(tt.alerts) + '</strong><span>3</span></div>' +
+          '<p>' + L('ភាពខុសគ្នាសាច់ប្រាក់ត្រូវការពិនិត្យ', 'Cash variance needs review') + '</p>' +
+          '<p>' + L('របាយការណ៍វេនព្រឹកត្រូវដាក់', 'Morning report is due') + '</p>' +
+          '<button data-action="nav" data-view="financial">' + esc(tt.viewAll) + '</button></div>' : '') +
+        '</div>' +
+        '<div class="shift-select-wrap">' + icon('sunrise', 15) +
+          '<select data-action="shift-select" aria-label="Current shift">' +
+            '<option value="Morning"' + (S.shift === 'Morning' ? ' selected' : '') + '>' + esc(tt.morningShift) + '</option>' +
+            '<option value="Afternoon"' + (S.shift === 'Afternoon' ? ' selected' : '') + '>' + esc(tt.afternoonShift) + '</option>' +
+            '<option value="Night"' + (S.shift === 'Night' ? ' selected' : '') + '>' + esc(tt.nightShift) + '</option>' +
+          '</select><span class="chev">' + icon('chevron-down', 14) + '</span></div>' +
+        '<div class="date-chip">' + icon('calendar-days', 15) + '<span>' + formatDate(new Date(), S.lang) + '</span></div>' +
+        '<button class="' + cn('icon-button', S.refreshing && 'spin-once') + '" data-action="refresh" aria-label="Refresh">' + icon('refresh-cw', 17) + '</button>' +
+      '</div></header>' +
+      '<main class="view-container">' + viewHtml + '</main>' +
+    '</div>' +
+    modalTask() + modalInquiry() + modalFinance() + '</div>';
+}
+
+function loginHtml() {
+  var tt = t();
+  return '<div class="auth-screen">' +
+    '<div class="auth-visual" style="background-image:linear-gradient(90deg, rgba(8,28,52,.94) 0%, rgba(8,28,52,.72) 42%, rgba(8,28,52,.14) 100%), url(' + (A['lobby-hero'] || '') + ')">' +
+      '<div class="visual-stamp"><span class="seal-emblem">' + sealImg() + '</span><span>FDR / 01</span></div>' +
+      '<div class="visual-copy"><p class="eyebrow">' + L('សៀវភៅប្រតិបត្តិការវេន', 'THE SHIFT BOOK') + '</p>' +
+        '<h2>' + L('រក្សាការប្រគល់វេនឱ្យច្បាស់លាស់', 'Keep the handoff clean.') + '</h2>' +
+        '<p>' + L('សេចក្តីរាយការណ៍ សាច់ប្រាក់ និងតម្រូវការភ្ញៀវ — នៅកន្លែងតែមួយ។', 'Reports, cash, and guest requests — held in one calm operational record.') + '</p></div>' +
+      '<div class="visual-footer"><span>SIEM REAP · FRONT OFFICE</span><span>EST. 2026</span></div>' +
+    '</div>' +
+    '<div class="auth-panel"><button class="auth-language" data-action="toggle-lang">' + (S.lang === 'km' ? 'EN' : 'ខ្មែរ') + '</button>' +
+      '<div class="auth-panel-inner">' +
+        '<div class="mobile-brand">' + sealImg() + '<span>FDR</span></div>' +
+        '<div class="auth-heading"><div class="auth-mark seal-emblem">' + sealImg() + '</div>' +
+          '<p class="eyebrow">' + L('តំបន់សុវត្ថិភាព', 'SECURE OPERATIONS') + '</p>' +
+          '<h1>' + esc(tt.appTitle) + '</h1><p>' + esc(tt.appSubtitle) + '</p></div>' +
+        '<form class="auth-form" id="login-form">' +
+          field(tt.email, '<input id="login-email" type="email" value="admin@hotel.com" required>', icon('message-circle', 16)) +
+          field(tt.password, '<input id="login-password" type="password" value="admin123" required>', icon('shield-check', 16)) +
+          field(tt.shift, '<select id="login-shift"><option value="Morning">' + esc(tt.morningShift) + ' · 07:00 – 14:00</option><option value="Afternoon">' + esc(tt.afternoonShift) + ' · 14:30 – 22:00</option><option value="Night">' + esc(tt.nightShift) + ' · 22:30 – 06:00</option></select>', icon('sunrise', 16)) +
+          '<button class="primary-button" type="submit" ' + (S.busy ? 'disabled' : '') + '>' + icon('log-in', 16) + esc(tt.signIn) + '<span class="btn-arrow">' + icon('arrow-up-right', 15) + '</span></button>' +
+        '</form>' +
+        '<p class="auth-hint">' + esc(tt.demoHint) + '</p>' +
+        '<button class="auth-register-link" data-action="open-register">' + esc(tt.noAccount) + ' ' + icon('arrow-up-right', 14) + '</button>' +
+      '</div></div></div>';
+}
+
+function registerHtml() {
+  var tt = t();
+  return '<div class="auth-screen">' +
+    '<div class="auth-visual auth-visual-compact" style="background-image:linear-gradient(90deg, rgba(8,28,52,.94) 0%, rgba(8,28,52,.68) 56%, rgba(8,28,52,.12) 100%), url(' + (A.hallway || '') + ')">' +
+      '<div class="visual-stamp"><span class="seal-emblem">' + sealImg() + '</span><span>FDR / 02</span></div>' +
+      '<div class="visual-copy"><p class="eyebrow">' + L('បុគ្គលិកផ្នែកទទួលភ្ញៀវ', 'FRONT OFFICE TEAM') + '</p>' +
+        '<h2>' + L('បន្ថែមមនុស្សត្រឹមត្រូវទៅក្នុងវេន', 'Add the right people to the shift.') + '</h2>' +
+        '<p>' + L('គណនីថ្មីត្រូវបានពិនិត្យដោយអ្នកគ្រប់គ្រងមុនពេលប្រើប្រាស់។', 'New accounts are reviewed by an administrator before access is granted.') + '</p></div>' +
+    '</div>' +
+    '<div class="auth-panel"><button class="auth-language" data-action="toggle-lang">' + (S.lang === 'km' ? 'EN' : 'ខ្មែរ') + '</button>' +
+      '<div class="auth-panel-inner">' +
+        '<button class="back-link" data-action="close-register">' + icon('arrow-down-right', 14) + ' ' + esc(tt.haveAccount) + '</button>' +
+        '<div class="auth-heading"><div class="auth-mark">' + icon('user-plus', 26) + '</div>' +
+          '<p class="eyebrow">' + L('សំណើចូលរួម', 'ACCESS REQUEST') + '</p>' +
+          '<h1>' + esc(tt.registerTitle) + '</h1><p>' + esc(tt.registerSubtitle) + '</p></div>' +
+        '<form class="auth-form" id="register-form">' +
+          field(tt.name, '<input id="reg-name" type="text" required>') +
+          field(tt.email, '<input id="reg-email" type="email" required>') +
+          field(tt.password, '<input id="reg-password" type="password" minlength="6" required>') +
+          '<div class="field-row">' +
+            field(tt.department, '<select id="reg-department"><option>Front office</option><option>Housekeeping</option><option>Maintenance</option><option>Food & beverage</option></select>') +
+            field(tt.shift, '<select id="reg-shift"><option>Morning</option><option>Afternoon</option><option>Night</option></select>') +
+          '</div>' +
+          '<button class="primary-button" type="submit" ' + (S.busy ? 'disabled' : '') + '>' + icon('user-plus', 16) + esc(tt.registerBtn) + '<span class="btn-arrow">' + icon('arrow-up-right', 15) + '</span></button>' +
+        '</form>' +
+      '</div></div></div>';
+}
+
+/* ============================= render + events ============================= */
+
+function render() {
+  var root = document.getElementById('root');
+  document.documentElement.lang = S.lang === 'km' ? 'km' : 'en';
+  var html;
+  if (S.boot) {
+    html = '<div class="app-boot"><img src="' + (A.seal || '') + '" alt=""><span class="app-boot-word">FDR</span></div>';
+  } else if (!S.user) {
+    html = S.registering ? registerHtml() : loginHtml();
+  } else {
+    html = appHtml();
+  }
+  root.innerHTML = html;
+  bindForms();
+}
+
+function bindForms() {
+  var root = document.getElementById('root');
+  var login = document.getElementById('login-form');
+  if (login) {
+    login.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var email = (document.getElementById('login-email').value || '').trim().toLowerCase();
+      var password = document.getElementById('login-password').value || '';
+      var shiftSel = document.getElementById('login-shift');
+      S.shift = shiftSel ? shiftSel.value : 'Morning';
+      S.busy = true;
+      render();
+      doLogin(email, password).catch(function () {
+        S.busy = false;
+        render();
+      });
+    });
+  }
+  var register = document.getElementById('register-form');
+  if (register) {
+    register.addEventListener('submit', function (event) {
+      event.preventDefault();
+      // read values BEFORE render() — the re-render replaces the DOM
+      var payload = {
+        name: (document.getElementById('reg-name').value || '').trim(),
+        email: (document.getElementById('reg-email').value || '').trim(),
+        password: document.getElementById('reg-password').value || '',
+        department: (document.getElementById('reg-department').value || 'Front office'),
+        shift: (document.getElementById('reg-shift').value || 'Morning')
+      };
+      S.busy = true;
+      render();
+      doRegister(payload).catch(function () {
+        S.busy = false;
+        render();
+      });
+    });
+  }
+  var report = document.getElementById('report-form');
+  if (report) {
+    report.addEventListener('submit', function (event) {
+      event.preventDefault();
+      submitReport('submitted');
+    });
+  }
+}
+
+function setUi(path, value) {
+  var parts = path.split('.');
+  var target = S.ui[parts[0]];
+  target[parts[1]] = value;
+}
+
+function liveUpdate(kind) {
+  if (kind === 'report') {
+    var u = S.ui.report;
+    var pct = u.total ? Math.min(100, Math.round((u.occupied / u.total) * 100)) : 0;
+    var pctEl = document.getElementById('report-pct');
+    if (pctEl) pctEl.textContent = pct + '%';
+    var bar = document.getElementById('report-progress-bar');
+    if (bar) bar.style.width = pct + '%';
+  } else if (kind === 'cash') {
+    var fin = S.ui.fin;
+    var variance = Number(fin.actual) - Number(fin.expected);
+    var negative = variance < 0;
+    var valEl = document.getElementById('cash-variance');
+    if (valEl) {
+      valEl.textContent = (negative ? '−' : '+') + '$' + Math.abs(variance).toFixed(2);
+      valEl.className = 'variance-value ' + (negative ? 'negative' : 'positive');
+    }
+    var resEl = document.getElementById('cash-result');
+    if (resEl) {
+      resEl.className = 'variance-result ' + (negative ? 'negative' : 'positive');
+      var strong = resEl.querySelector('strong');
+      var span = resEl.querySelector('div > span');
+      if (strong) strong.textContent = negative ? L('ត្រូវការពិនិត្យបន្ថែម', 'Needs review') : L('សាច់ប្រាក់ត្រូវគ្នា', 'Cash is balanced');
+      if (span) span.textContent = negative ? L('កត់ត្រាមូលហេតុ មុនពេលបិទវេន។', 'Record the reason before closing the shift.') : L('មិនមានភាពខុសគ្នាដែលត្រូវដោះស្រាយទេ។', 'No exception needs resolution.');
+    }
+  } else if (kind === 'tracking') {
+    var fin2 = S.ui.fin;
+    var expected = Number(fin2.opening) + Number(fin2.sales) - Number(fin2.refunds);
+    var el = document.getElementById('tracking-close');
+    if (el) el.textContent = '$' + expected.toFixed(2);
+  } else if (kind === 'closeout') {
+    var el2 = document.getElementById('closeout-afternoon-open');
+    if (el2) el2.textContent = '$' + (Number(S.ui.close.morningClose) || 0).toFixed(2);
+  } else if (kind === 'history') {
+    var wrap = document.getElementById('history-table');
+    if (wrap) wrap.innerHTML = buildHistoryTable();
+  }
+}
+
+function buildHistoryTable() {
+  var tt = t();
+  var query = S.ui.history.query.trim().toLowerCase();
+  var filtered = S.data.reports.filter(function (report) {
+    return !query || report.id.toLowerCase().indexOf(query) !== -1 || report.reporter.toLowerCase().indexOf(query) !== -1;
+  });
+  var rows = filtered.map(function (report) {
+    return [report.id, formatDate(new Date(report.dateIso + 'T00:00:00'), S.lang), report.shift, report.reporter, 'Front office', pill(report.status),
+      '<button class="text-button">' + L('បើក', 'Open') + ' ' + icon('arrow-up-right', 13) + '</button>'];
+  });
+  return dataTable(['Report ID', tt.date, tt.shift, tt.reporter, 'Department', tt.status, ''], rows);
+}
+
+var rootClick = function (event) {
+  var target = event.target;
+  var actionEl = target.closest('[data-action]');
+  if (actionEl) {
+    var action = actionEl.getAttribute('data-action');
+    handleAction(action, actionEl);
+    return;
+  }
+  // clicking the modal backdrop (not the sheet) closes the modal
+  if (S.ui.taskModal || S.ui.inquiryModal || S.ui.financeModal) {
+    var backdrop = target.closest('[data-close-on-backdrop]');
+    if (backdrop && target === backdrop) {
+      S.ui.taskModal = null;
+      S.ui.inquiryModal = null;
+      S.ui.financeModal = null;
+      render();
+      return;
+    }
+  }
+  // click outside a popover closes it
+  if (S.ui.notifOpen && !target.closest('.notification-wrap')) {
+    S.ui.notifOpen = false;
+    render();
+  }
+};
+
+function handleAction(action, el) {
+  var a = el.getAttribute('data-view');
+  switch (action) {
+    case 'nav':
+      S.view = a;
+      S.ui.mobileNavOpen = false;
+      S.ui.notifOpen = false;
+      render();
+      break;
+    case 'toggle-lang':
+      S.lang = S.lang === 'km' ? 'en' : 'km';
+      render();
+      break;
+    case 'toggle-sidebar':
+      S.ui.sidebarCollapsed = !S.ui.sidebarCollapsed;
+      render();
+      break;
+    case 'toggle-mobile':
+      S.ui.mobileNavOpen = !S.ui.mobileNavOpen;
+      render();
+      break;
+    case 'notif':
+      S.ui.notifOpen = !S.ui.notifOpen;
+      if (S.ui.notifOpen) S.ui.notifCount = 0;
+      render();
+      break;
+    case 'refresh':
+      doRefresh();
+      break;
+    case 'logout':
+      doLogout();
+      break;
+    case 'open-register':
+      S.registering = true;
+      render();
+      break;
+    case 'close-register':
+      S.registering = false;
+      render();
+      break;
+    case 'select-day':
+      S.ui.selectedDay = Number(el.getAttribute('data-day'));
+      render();
+      break;
+    case 'report-draft':
+      submitReport('draft');
+      break;
+    case 'shift-gen':
+      S.ui.shifts.generated = true;
+      render();
+      break;
+    case 'shift-csv':
+      exportShiftCsv();
+      break;
+    case 'handover-print':
+      printSheet('handover', 'FDR Shift Handover ' + S.ui.shifts.date);
+      break;
+    case 'task-status':
+      (function (id, status) {
+        mutate(function () { return api('setTaskStatus', { token: S.token, id: id, status: status }); })
+          .then(function () { toastSuccess(L('ស្ថានភាពភារកិច្ចបានធ្វើបច្ចុប្បន្នភាព', 'Task status updated')); })
+          .catch(function (e) { toastError(errText(e)); });
+      })(el.getAttribute('data-id'), el.getAttribute('data-status'));
+      break;
+    case 'open-task-modal':
+      S.ui.taskModal = { title: '', priority: 'Med', due: '12:00' };
+      render();
+      break;
+    case 'open-inquiry-modal':
+      S.ui.inquiryModal = { channel: 'Front desk', category: 'Room info', guestName: '', details: '', outcome: 'follow_up', followUp: '' };
+      render();
+      break;
+    case 'open-finance-modal':
+      S.ui.financeModal = { type: el.getAttribute('data-type'), dateIso: todayIso(), shift: S.shift, category: '', description: '', amount: '' };
+      render();
+      break;
+    case 'close-modal':
+      S.ui.taskModal = null;
+      S.ui.inquiryModal = null;
+      S.ui.financeModal = null;
+      render();
+      break;
+    case 'task-add':
+      (function (modal) {
+        mutate(function () {
+          return api('addTask', { token: S.token, title: modal.title.trim(), detail: S.lang === 'km' ? 'បានបន្ថែមពីផ្ទាំងគ្រប់គ្រង' : 'Added from dashboard', priority: modal.priority, due: modal.due });
+        }).then(function () {
+          S.ui.taskModal = null;
+          render();
+          toastSuccess(L('បានបន្ថែមភារកិច្ចថ្មី', 'New task added'));
+        }).catch(function (e) {
+          S.ui.taskModal = null;
+          render();
+          toastError(errText(e));
+        });
+      })(S.ui.taskModal);
+      break;
+    case 'inquiry-add':
+      (function (modal) {
+        mutate(function () {
+          return api('addInquiry', {
+            token: S.token, channel: modal.channel, category: modal.category,
+            guestName: modal.guestName.trim(), details: modal.details.trim(),
+            outcome: modal.outcome, followUp: modal.followUp.trim()
+          });
+        }).then(function () {
+          S.ui.inquiryModal = null;
+          render();
+          toastSuccess(L('សំណួរត្រូវបានកត់ត្រា', 'Inquiry logged'));
+        }).catch(function (e) {
+          S.ui.inquiryModal = null;
+          render();
+          toastError(errText(e));
+        });
+      })(S.ui.inquiryModal);
+      break;
+    case 'finance-add':
+      (function (modal) {
+        mutate(function () {
+          return api('addFinance', {
+            token: S.token, type: modal.type, dateIso: modal.dateIso, shift: modal.shift,
+            category: modal.category.trim(), description: modal.description.trim(), amount: Number(modal.amount)
+          });
+        }).then(function () {
+          S.ui.financeModal = null;
+          render();
+          toastSuccess(L('ប្រតិបត្តិការត្រូវបានកត់ត្រា', 'Ledger entry saved'));
+        }).catch(function (e) {
+          S.ui.financeModal = null;
+          render();
+          toastError(errText(e));
+        });
+      })(S.ui.financeModal);
+      break;
+    case 'fin-tab':
+      S.ui.fin.tab = el.getAttribute('data-tab');
+      render();
+      break;
+    case 'fin-csv':
+      exportFinanceCsv();
+      break;
+    case 'cash-log-save':
+      toastSuccess(L('បានរក្សាទុកកំណត់ហេតុ', 'Cash log saved'));
+      break;
+    case 'close-csv':
+      (function (c) {
+        downloadCsv('fdr-daily-closeout-2026-08-30.csv',
+          ['Date', 'Shift', 'Staff', 'Opening float USD', 'Closing float USD', 'Handover note'],
+          [
+            ['30 Aug 2026', 'Morning', 'John Doe', '200', String(c.morningClose), 'Pending tasks recorded'],
+            ['30 Aug 2026', 'Afternoon', 'Dara Lim', String(c.morningClose), '1080', 'Linked from morning'],
+            ['30 Aug 2026', 'Night', 'Nary Chann', '1080', '720', 'End-of-day summary recorded']
+          ]);
+        toastSuccess(L('ឯកសារ CSV បានទាញយក', 'Closeout CSV downloaded'));
+      })(S.ui.close);
+      break;
+    case 'close-print':
+      printSheet('closeout', 'FDR Daily Closeout');
+      break;
+    case 'close-save':
+      S.ui.close.saved = true;
+      render();
+      toastSuccess(t().saved);
+      break;
+    case 'fb-save':
+      (function (f) {
+        mutate(function () {
+          return api('addFeedback', {
+            token: S.token, dateIso: f.dateIso, channel: f.channel,
+            guestName: f.guestName.trim(), room: f.room.trim(), comment: f.comment.trim()
+          });
+        }).then(function () {
+          S.ui.fb.comment = '';
+          S.ui.fb.guestName = '';
+          S.ui.fb.room = '';
+          S.ui.fb.saved = true;
+          render();
+          window.setTimeout(function () { S.ui.fb.saved = false; render(); }, 2600);
+          toastSuccess(L('មតិភ្ញៀវត្រូវបានរក្សាទុក', 'Guest feedback saved'));
+        }).catch(function (e) { toastError(errText(e)); });
+      })(S.ui.fb);
+      break;
+    case 'month-csv':
+      exportMonthlyCsv();
+      break;
+    case 'year-csv':
+      exportYearCsv();
+      break;
+    case 'shift-add':
+      toastInfo(L('ទម្រង់បន្ថែមវេនបានបើក', 'Shift form ready'));
+      break;
+    case 'admin-section':
+      S.ui.admin.section = el.getAttribute('data-section');
+      render();
+      break;
+    case 'user-status':
+      (function (id, status) {
+        mutate(function () { return api('setUserStatus', { token: S.token, id: id, status: status }); })
+          .then(function () {
+            toastSuccess(status === 'active' ? L('គណនីត្រូវបានអនុម័ត', 'Account approved') : L('គណនីត្រូវបានបដិសេធ', 'Account rejected'));
+          })
+          .catch(function (e) { toastError(errText(e)); });
+      })(el.getAttribute('data-id'), el.getAttribute('data-status'));
+      break;
+  }
+}
+
+function submitReport(status) {
+  var input = collectReport();
+  input.status = status;
+  input.token = S.token;
+  mutate(function () { return api('submitReport', input); }).then(function (result) {
+    if (status === 'draft') {
+      toastSuccess(t().saved);
+    } else {
+      toastSuccess(t().submitted + (result && result.id ? ' · ' + result.id : ''));
+      S.view = 'shiftreports';
+      S.ui.shifts.date = input.dateIso;
+      S.ui.shifts.generated = true;
+      render();
+    }
+  }).catch(function (e) { toastError(errText(e)); });
+}
+
+var rootInput = function (event) {
+  var target = event.target;
+  var bound = target.closest('[data-bind]');
+  if (!bound) return;
+  var path = bound.getAttribute('data-bind');
+  var value = bound.type === 'checkbox' ? bound.checked : bound.value;
+  setUi(path, value);
+  var live = bound.getAttribute('data-live');
+  if (live) liveUpdate(live);
+  syncModalButtons();
+};
+
+var rootChange = function (event) {
+  var target = event.target;
+  var bound = target.closest('[data-bind]');
+  if (bound) {
+    var path = bound.getAttribute('data-bind');
+    var value = bound.type === 'checkbox' ? bound.checked : bound.value;
+    setUi(path, value);
+    var changeKind = bound.getAttribute('data-change');
+    if (changeKind) {
+      if (changeKind === 'shifts-date') S.ui.shifts.generated = false;
+      render();
+    } else if (bound.closest('.auth-form') || bound.closest('.form-sheet')) {
+      // keep text field focus — no re-render on plain change
+    }
+    if (bound.id === 'login-shift' || bound.id === 'login-email' || bound.id === 'login-password') return;
+  }
+  if (target.getAttribute && target.getAttribute('data-action') === 'shift-select') {
+    S.shift = target.value;
+    render();
+  }
+  // modal validation buttons enable/disable
+  if (S.ui.taskModal || S.ui.inquiryModal || S.ui.financeModal) {
+    syncModalButtons();
+  }
+};
+
+function syncModalButtons() {
+  var root = document.getElementById('root');
+  var taskBtn = root.querySelector('[data-action="task-add"]');
+  if (taskBtn && S.ui.taskModal) taskBtn.disabled = S.busy || !S.ui.taskModal.title.trim();
+  var inqBtn = root.querySelector('[data-action="inquiry-add"]');
+  if (inqBtn && S.ui.inquiryModal) inqBtn.disabled = S.busy || !S.ui.inquiryModal.details.trim();
+  var finBtn = root.querySelector('[data-action="finance-add"]');
+  if (finBtn && S.ui.financeModal) {
+    var parsed = Number(S.ui.financeModal.amount);
+    finBtn.disabled = S.busy || !S.ui.financeModal.category.trim() || !isFinite(parsed) || parsed <= 0;
+  }
+  // feedback save button (lives in the view, not a modal)
+  var fbBtn = root.querySelector('[data-action="fb-save"]');
+  if (fbBtn) fbBtn.disabled = !String(S.ui.fb.comment || '').trim();
+}
+
+function init() {
+  var root = document.getElementById('root');
+  root.addEventListener('click', rootClick);
+  root.addEventListener('input', rootInput);
+  root.addEventListener('change', rootChange);
+  boot();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+})();
+</script>
+</body>
+</html>
